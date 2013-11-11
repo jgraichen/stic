@@ -1,0 +1,32 @@
+#!/bin/env ruby
+STDOUT.sync = true
+
+require "rubygems"
+require "commander/import"
+require "stic"
+
+program :name, "stic"
+program :version, Stic::VERSION.to_s
+program :description, "Stic is an extensible static site generator."
+
+default_command :help
+
+command :build do |c|
+  c.syntax = "stic build"
+  c.description = "Build stic site."
+
+  c.action do |args, options|
+    site = Stic::Site.lookup!
+
+    STDOUT.puts  " Configuration files: #{site.config.files.join(", ")}"
+    STDOUT.puts  "              Source: #{site.source}"
+    STDOUT.puts  "              Target: #{site.target}"
+    STDOUT.print "       Generating ... "
+    STDOUT.flush
+
+    site.cleanup
+    site.write
+
+    STDOUT.puts "done."
+  end
+end

@@ -62,7 +62,7 @@ module Stic
     # the URL template.
     #
     def write
-      ::File.open site.target.join(relative_target_path) do |file|
+      ::File.open site.target.join(relative_target_path), 'w' do |file|
         file.puts render
       end
     end

@@ -49,6 +49,12 @@ module Stic
       relative_url[-1] == '/' ? "#{relative_url}index.html" : relative_url
     end
 
+    # Return full target path.
+    #
+    def target_path
+      site.target.join ::Stic::Utils.without_leading_slash relative_target_path
+    end
+
     # Return processed blob content as it can e.g. can be
     # written to file.
     #
@@ -62,7 +68,7 @@ module Stic
     # the URL template.
     #
     def write
-      ::File.open site.target.join(relative_target_path), 'w' do |file|
+      ::File.open target_path, 'w' do |file|
         file.puts render
       end
     end

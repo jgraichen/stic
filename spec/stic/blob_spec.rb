@@ -40,4 +40,15 @@ describe Stic::Blob do
       it { should eq '/blog/2013/12/a-blog-post/index.html' }
     end
   end
+
+  describe '#target_path' do
+    before { blob.stub(:relative_target_path).and_return(path) }
+    before { blob.site.stub(:target).and_return(Pathname.new('/path/to/stic-site')) }
+    subject { blob.target_path }
+
+    context 'with path' do
+      let(:path) { 'files/css/style.css' }
+      it { should eq Pathname.new '/path/to/stic-site/files/css/style.css' }
+    end
+  end
 end

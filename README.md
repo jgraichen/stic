@@ -1,24 +1,18 @@
 # Stic
 
-TODO: Write a gem description
+Opinionated extensible static site generator.
+
+## Description
+
+Still an opinionated extensible static site generator.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'stic'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install stic
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: ToDo
 
 ## Example
 

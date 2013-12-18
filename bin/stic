@@ -16,7 +16,10 @@ command :build do |c|
   c.description = "Build stic site."
 
   c.action do |args, options|
-    site = Stic::Site.lookup!
+    unless (site = Stic::Site.lookup)
+      puts "Not in a stic site. You need to run the `stic` command within a stic site."
+      exit 1
+    end
 
     STDOUT.puts  " Configuration files: #{site.config.files.join(", ")}"
     STDOUT.puts  "              Source: #{site.source}"

@@ -53,14 +53,6 @@ module Stic
         file = ::File.lookup /^stic.ya?ml$/
         file ? self.new(::File.dirname(file), Stic::Config.load(file)) : nil
       end
-
-      def lookup!
-        site = self.lookup
-        return site if site
-
-        puts "Not in a stic site. You need to run the `stic` command within a stic site."
-        exit 1
-      end
     end
   end
 end

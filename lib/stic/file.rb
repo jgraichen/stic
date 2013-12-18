@@ -1,45 +1,38 @@
 module Stic
 
-  # Represents a file in generated site.
+  # Represent a output blob containing data from a
+  # source single file.
   #
-  class File
-    attr_reader :site, :base, :name
+  class File < Blob
+    attr_reader :base, :name
 
-    def initialize(site, base, name)
-      @site = site
-      @base = base
-      @name = name
+    def initialize(args = {})
+      super
+      if (file = args[:file])
+        args[:base] ||= ::File.dirname file
+        args[:name] ||= ::File.basename file
+      end
+
+      @base = args.delete(:base) { raise ::ArgumentError.new 'Argument `:base` required.' }
+      @name = args.delete(:name) { raise ::ArgumentError.new 'Argument `:name` required.' }
     end
 
     # Return source relative path.
     #
-    def path
+    def relative_source_path
       "#{base}/#{name}"
     end
 
     # Return full source path.
     #
     def source_path
-      site.source.join "./#{path}"
-    end
-
-    # Return full target path.
-    #
-    def target_path
-      site.target.join url[-1] == '/' ? "./#{url}/index.html" : "./#{url}"
+      site.source.join ::Stic::Utils.without_leading_slash relative_source_path
     end
 
     # Return site relative URL.
     #
-    def url
-      ::Stic::Utils.ensure_leading_slash path
-    end
-
-    # Write to target file.
-    #
-    def write
-      ::FileUtils.mkdir_p ::File.dirname target_path
-      ::File.write target_path, render
+    def url_template
+      ::Stic::Utils.with_leading_slash relative_source_path
     end
 
     # Return final output as string.
@@ -52,11 +45,6 @@ module Stic
     #
     def read
       ::File.read source_path
-    end
-    alias_method :to_s, :read
-
-    def inspect
-      "#<#{self.class.name}:#{object_id} #{path}>"
     end
 
     class << self

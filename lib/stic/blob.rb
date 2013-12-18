@@ -8,7 +8,7 @@ module Stic
 
     def initialize(args = {})
       @site = args.delete(:site) { raise ::ArgumentError.new 'Argument `:site` required.' }
-      @data = HashWithIndifferentAccess.new args.delete(:data)
+      @data = ::ActiveSupport::HashWithIndifferentAccess.new args.delete(:data)
     end
 
     # Return a the relative URL the blob should have in
@@ -43,7 +43,7 @@ module Stic
     #
     # The default blob relative target path will be derived
     # from the relative URL. If the relative URL ends with
-    # a slash a `/index.html` will be added.
+    # a slash a `index.html` will be added.
     #
     def relative_target_path
       relative_url[-1] == '/' ? "#{relative_url}index.html" : relative_url
@@ -68,9 +68,17 @@ module Stic
     # the URL template.
     #
     def write
+      unless ::File.directory?(dir = ::File.dirname(target_path))
+        FileUtils.mkdir_p dir
+      end
+
       ::File.open target_path, 'w' do |file|
         file.puts render
       end
+    end
+
+    def inspect
+      "#<#{self.class.name}:#{object_id} #{relative_url}>"
     end
   end
 end

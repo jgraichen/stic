@@ -8,8 +8,16 @@ module Stic
       @site = site
     end
 
-    def generate
-      raise NotImplementedError
+    def name
+      self.class.name.gsub(/Generator$/, '').underscore
+    end
+
+    def config
+      @config ||= ::ActiveSupport::HashWithIndifferentAccess.new site.config.options[name] || {}
+    end
+
+    def run
+      raise NotImplementedError.new "#{self.class.name}#run not implemented."
     end
   end
 end

@@ -20,6 +20,15 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Example
+
+```
+$ cd example/
+$ bundle install
+$ bundle binstubs stic
+$ bin/stic
+```
+
 ## Contributing
 
 1. Fork it

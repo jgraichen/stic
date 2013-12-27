@@ -68,7 +68,7 @@ module Stic
     # the URL template.
     #
     def write
-      unless ::File.directory?(dir = ::File.dirname(target_path))
+      unless ::File.directory? (dir = ::File.dirname(target_path))
         FileUtils.mkdir_p dir
       end
 

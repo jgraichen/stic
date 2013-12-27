@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Stic::Blob do
   let(:data) { nil }
-  let(:blob) { Stic::Blob.new site: double('site'), data: data }
+  let(:site) { double('site') }
+  let(:blob) { Stic::Blob.new site: site, data: data }
 
   describe '#relative_url' do
     before { blob.stub(:url_template).and_return(tpl) }
@@ -43,12 +44,26 @@ describe Stic::Blob do
 
   describe '#target_path' do
     before { blob.stub(:relative_target_path).and_return(path) }
-    before { blob.site.stub(:target).and_return(Pathname.new('/path/to/stic-site')) }
+    before { site.stub(:target).and_return(Pathname.new('/path/to/stic-site')) }
     subject { blob.target_path }
 
     context 'with path' do
       let(:path) { 'files/css/style.css' }
       it { should eq Pathname.new '/path/to/stic-site/files/css/style.css' }
+    end
+  end
+
+  describe '#write' do
+    let(:tmpdir) { Dir.mktmpdir }
+    let(:target_path) { "#{tmpdir}/path/to/file.html" }
+    let(:content) { "Just some content!" }
+
+    before { blob.stub(:target_path).and_return(target_path) }
+    before { blob.stub(:render).and_return(content) }
+    after { FileUtils.rm_rf tmpdir if File.directory? tmpdir }
+
+    it 'should create directories and file' do
+      blob.write
     end
   end
 end

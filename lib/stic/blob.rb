@@ -51,6 +51,12 @@ module Stic
 
     # Return full target path.
     #
+    # The target path is based on the site target dir and
+    # the relative target path.
+    #
+    # You should not override this method. Instead provide
+    # a custom relative target path or URL.
+    #
     def target_path
       site.target.join ::Stic::Utils.without_leading_slash relative_target_path
     end
@@ -64,8 +70,10 @@ module Stic
 
     # Write blob to file.
     #
-    # The filename must be derived from the URL based on
-    # the URL template.
+    # `#target_path` will be used as the file path.
+    #
+    # You should not override this method. Instead provide
+    # a custom `render` method.
     #
     def write
       unless ::File.directory? (dir = ::File.dirname(target_path))

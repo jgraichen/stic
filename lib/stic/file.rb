@@ -1,7 +1,10 @@
 module Stic
 
-  # Represent a output blob containing data from a
-  # source single file.
+  # Represent an output blob containing data from a
+  # single source file.
+  #
+  # Subclasses can override the `render` method to
+  # implement processing logic.
   #
   class File < Blob
     attr_reader :base, :name
@@ -44,7 +47,7 @@ module Stic
     # Return raw content.
     #
     def read
-      ::File.read source_path
+      @content ||= ::File.read source_path
     end
 
     class << self

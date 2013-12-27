@@ -1,7 +1,18 @@
 module Stic::Generators
 
+  # The static generators adds file blobs for each static
+  # file to the generated output.
   #
-  class StaticGenerator < ::Stic::Generator
+  # The source path for static files will be taken from
+  # generator config key `path` and defaults to `./files`.
+  #
+  # You can override the path in your site configuration:
+  #
+  #     generators:
+  #       static:
+  #         path: ./custom_files
+  #
+  class Static < ::Stic::Generator
 
     def path
       config[:path] || 'files'
@@ -17,5 +28,5 @@ module Stic::Generators
     end
   end
 
-  ::Stic::Site.generators << StaticGenerator
+  ::Stic::Site.generators << Static
 end

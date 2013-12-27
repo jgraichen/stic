@@ -73,7 +73,7 @@ module Stic
       end
 
       ::File.open target_path, 'w' do |file|
-        file.puts render
+        file.write render
       end
     end
 

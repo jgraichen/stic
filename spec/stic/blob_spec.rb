@@ -15,13 +15,13 @@ describe Stic::Blob do
     end
 
     context 'with one parameter' do
-      let(:data) { {slug: "a-blog-title"} }
+      let(:data) { {slug: 'a-blog-title'} }
       let(:tpl) { '/blog/:slug/' }
       it { should eq '/blog/a-blog-title/' }
     end
 
     context 'with multiple parameters' do
-      let(:data) { {slug: "a-blog-title", year: 2013, month: 12} }
+      let(:data) { {slug: 'a-blog-title', year: 2013, month: 12} }
       let(:tpl) { '/blog/:year/:month/:slug/' }
       it { should eq '/blog/2013/12/a-blog-title/' }
     end
@@ -54,16 +54,21 @@ describe Stic::Blob do
   end
 
   describe '#write' do
-    let(:tmpdir) { Dir.mktmpdir }
-    let(:target_path) { "#{tmpdir}/path/to/file.html" }
-    let(:content) { "Just some content!" }
+    let(:target_path) { '/path/to/file.html' }
+    let(:content) { 'Just some content!' }
 
     before { blob.stub(:target_path).and_return(target_path) }
     before { blob.stub(:render).and_return(content) }
-    after { FileUtils.rm_rf tmpdir if File.directory? tmpdir }
 
     it 'should create directories and file' do
       blob.write
+      expect(File.directory?('/path/to')).to be_true
+      expect(File.file?('/path/to/file.html')).to be_true
+    end
+
+    it 'should write content to file' do
+      blob.write
+      expect(File.read('/path/to/file.html')).to eq 'Just some content!'
     end
   end
 end

@@ -14,12 +14,18 @@ module Stic
       @generators = self.class.generators.map{ |g| g.new self }
     end
 
-    def run
-      generators.each{ |generator| generator.run }
+    def run(&block)
+      generators.each do |generator|
+        block.call generator if block
+        generator.run
+      end
     end
 
-    def write
-      blobs.each{ |blob| blob.write }
+    def write(&block)
+      blobs.each do |blob|
+        block.call blob if block
+        blob.write
+      end
     end
 
     def cleanup
@@ -39,7 +45,6 @@ module Stic
 
     def <<(blob)
       blobs << blob
-      STDOUT.puts "  Blob added: #{blob.inspect}"
     end
 
     class << self

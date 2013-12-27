@@ -27,10 +27,25 @@ command :build do |c|
     STDOUT.print "       Generating ... "
     STDOUT.flush
 
-    site.run
-    site.write
-    site.cleanup
+    str_length = 0
 
-    STDOUT.puts "done."
+    log = lambda do |str|
+      STDOUT.print "\r                      " + ' ' * str_length
+      STDOUT.print "\r                  ... #{str}"
+      STDOUT.flush
+      str_length = str.length
+    end
+
+    begin
+      site.run { |generator| log.call "Running #{generator.class.name}" }
+      site.write { |blob| log.call "Write #{blob.relative_url}" }
+      site.cleanup
+    rescue => e
+      STDOUT.puts
+      raise e
+    end
+
+    log.call "done."
+    STDOUT.puts
   end
 end

@@ -4,9 +4,10 @@ module Stic
   #
   class Config
     attr_reader :options, :files
+    delegate :[], to: :@options
 
-    def initialize
-      @options = {}
+    def initialize(options = {})
+      @options = options
       @files   = []
     end
 

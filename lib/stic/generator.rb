@@ -32,7 +32,7 @@ module Stic
     #
     def config
       @config ||= begin
-        conf = site.config.config['generators'] || {}
+        conf = site.config['generators'] || {}
         ::ActiveSupport::HashWithIndifferentAccess.new conf[name] || {}
       end
     end

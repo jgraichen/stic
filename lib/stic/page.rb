@@ -3,33 +3,26 @@ module Stic
   #
   #
   class Page < File
-    attr_reader :site, :source, :content, :data
+    attr_reader :site, :source
 
     def initialize(site, source)
       @site   = site
       @source = source
-      @data   = {}
-
-      read
-    end
-
-    def read
-      begin
-        @content = File.read(source)
-
-        if @content =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
-          @content = $POSTMATCH
-          @data    = YAML.safe_load($1)
-        end
-      rescue SyntaxError => e
-        puts "YAML Exception reading #{source}: #{e.message}"
-      rescue Exception => e
-        puts "Error reading file #{source}: #{e.message}"
-      end
     end
 
     def render
 
+    end
+
+    def data
+      @data ||= begin
+        if content =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
+          @content = $POSTMATCH
+          YAML.safe_load($1)
+        else
+          {}
+        end
+      end
     end
 
     class << self

@@ -41,13 +41,28 @@ module Stic
     # Return final output as string.
     #
     def render
-      read
+      content
     end
 
-    # Return raw content.
+    # Return file content.
+    #
+    # This method caches file content and should be
+    # favored over `read`.
+    #
+    def content
+      @content ||= read
+    end
+
+    # Read and return raw content.
+    #
+    # It directly read the content from file every time
+    # called and should be avoided in favor of `content`.
+    #
+    # It can be overridden by subclasses implementing
+    # special input reading behavior.
     #
     def read
-      @content ||= ::File.read source_path
+      ::File.read source_path
     end
 
     class << self

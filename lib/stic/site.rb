@@ -35,10 +35,8 @@ module Stic
       Dir.glob(target.join('**/*')).each do |path|
         if ::File.file?(path) && !paths.include?(path)
           ::File.unlink path
-          puts "Unlinked #{path}"
         elsif ::File.directory?(path) && !paths.any? { |p| p.starts_with? path }
           FileUtils.rm_rf path
-          puts "Removed #{path}"
         end
       end
     end

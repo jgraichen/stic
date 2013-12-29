@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe File do
   describe ".lookup" do
-    before { fixture_base 'lookup1' }
+    around { |example| within_fixture_base 'lookup1', &example }
 
     context "with filename" do
       it "should find file in current directory" do

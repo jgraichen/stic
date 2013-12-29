@@ -3,14 +3,16 @@ module FileFixtures
     @base = base
   end
 
-  def within_temporary_fixture
+  def within_fixture_base(base)
+    @base = base
+    yield
+  ensure
+    @base = nil
+  end
+
+  def within_temporary_fixture_base(&block)
     Dir.mktmpdir do |dir|
-      begin
-        @base = dir
-        yield
-      ensure
-        @base = nil
-      end
+      within_fixture_base dir, &block
     end
   end
 

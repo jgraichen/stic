@@ -54,7 +54,7 @@ describe Stic::Blob do
   end
 
   describe '#write' do
-    around { |example| within_temporary_fixture &example }
+    around { |example| within_temporary_fixture_base &example }
     let(:target_path) { fixture_path '/path/to/file.html' }
     let(:content) { 'Just some content!' }
 

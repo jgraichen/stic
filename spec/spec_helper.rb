@@ -1,3 +1,12 @@
+require 'rspec'
+
+if ENV['CI'] || ENV['COVERAGE']
+  require 'coveralls'
+  Coveralls.wear! do
+    add_filter 'spec'
+  end
+end
+
 # Load stic
 require 'stic'
 

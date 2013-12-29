@@ -1,13 +1,18 @@
 module FileFixtures
-  def fixture_base(base)
-    @base = base
+  def fixture_base(base = nil)
+    self.fixture_base = base if base
+    Thread.current[:fixture_base]
+  end
+
+  def fixture_base=(base)
+    Thread.current[:fixture_base] = base
   end
 
   def within_fixture_base(base)
-    @base = base
+    self.fixture_base = base
     yield
   ensure
-    @base = nil
+    self.fixture_base = nil
   end
 
   def within_temporary_fixture_base(&block)
@@ -17,7 +22,7 @@ module FileFixtures
   end
 
   def within_fixture(path)
-    raise ArgumentError, "No fixture base set." unless @base
+    raise ArgumentError, "No fixture base set." unless fixture_base
 
     chdir = fixture_path(path)
     raise ArgumentError, "Within fixture path does not point to directory: #{chdir}" unless File.directory?(chdir)
@@ -26,14 +31,14 @@ module FileFixtures
   end
 
   def fixture_path(path)
-    raise ArgumentError, "No fixture base set." unless @base
+    raise ArgumentError, "No fixture base set." unless fixture_base
 
-    fixture_dir = File.expand_path("../../fixtures/#{@base}", __FILE__)
+    fixture_dir = File.expand_path("../../fixtures/#{fixture_base}", __FILE__)
     return File.expand_path("./#{path}", fixture_dir)
   end
 end
 
 RSpec.configure do |c|
   c.include FileFixtures
-  c.after(:each) { fixture_base nil }
+  c.after(:each) { self.fixture_base = nil }
 end

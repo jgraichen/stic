@@ -1,10 +1,3 @@
-# Load dependencies
-require 'bundler'
-Bundler.require :default, :test
-
-require 'fakefs/spec_helpers'
-FakeFS::File.send :extend, File::Lookup
-
 # Load stic
 require 'stic'
 
@@ -15,10 +8,6 @@ RSpec.configure do |config|
   # Random order
   config.order = 'random'
 
-  config.include FakeFS::SpecHelpers
-
-  # Only allow expect syntax
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
+  # Raise errors for old :should expectation syntax.
+  config.raise_errors_for_deprecations!
 end

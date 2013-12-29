@@ -3,6 +3,17 @@ module FileFixtures
     @base = base
   end
 
+  def within_temporary_fixture
+    Dir.mktmpdir do |dir|
+      begin
+        @base = dir
+        yield
+      ensure
+        @base = nil
+      end
+    end
+  end
+
   def within_fixture(path)
     raise ArgumentError, "No fixture base set." unless @base
 

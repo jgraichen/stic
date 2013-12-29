@@ -7,8 +7,12 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec', '>= 3.0.0.beta1', '< 4'
   gem 'fakefs', require: 'fakefs/safe'
+end
+
+platform :rbx do
+  gem 'rubysl'
 end
 
 # Specify your gem's dependencies in stic.gemspec

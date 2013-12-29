@@ -6,7 +6,7 @@ describe Stic::Blob do
   let(:blob) { Stic::Blob.new site: site, data: data }
 
   describe '#relative_url' do
-    before { blob.stub(:url_template).and_return(tpl) }
+    before { allow(blob).to receive(:url_template).and_return(tpl) }
     subject { blob.relative_url }
 
     context 'without placeholders' do
@@ -28,7 +28,7 @@ describe Stic::Blob do
   end
 
   describe '#relative_target_path' do
-    before { blob.stub(:relative_url).and_return(url) }
+    before { allow(blob).to receive(:relative_url).and_return(url) }
     subject { blob.relative_target_path }
 
     context 'with full file URL' do
@@ -43,8 +43,8 @@ describe Stic::Blob do
   end
 
   describe '#target_path' do
-    before { blob.stub(:relative_target_path).and_return(path) }
-    before { site.stub(:target).and_return(Pathname.new('/path/to/stic-site')) }
+    before { allow(blob).to receive(:relative_target_path).and_return(path) }
+    before { allow(site).to receive(:target).and_return(Pathname.new('/path/to/stic-site')) }
     subject { blob.target_path }
 
     context 'with path' do
@@ -54,21 +54,22 @@ describe Stic::Blob do
   end
 
   describe '#write' do
-    let(:target_path) { '/path/to/file.html' }
+    around { |example| within_temporary_fixture &example }
+    let(:target_path) { fixture_path '/path/to/file.html' }
     let(:content) { 'Just some content!' }
 
-    before { blob.stub(:target_path).and_return(target_path) }
-    before { blob.stub(:render).and_return(content) }
+    before { allow(blob).to receive(:target_path).and_return(target_path) }
+    before { allow(blob).to receive(:render).and_return(content) }
 
     it 'should create directories and file' do
       blob.write
-      expect(File.directory?('/path/to')).to be_true
-      expect(File.file?('/path/to/file.html')).to be_true
+      expect(File.directory?(fixture_path '/path/to')).to be true
+      expect(File.file?(fixture_path '/path/to/file.html')).to be true
     end
 
     it 'should write content to file' do
       blob.write
-      expect(File.read('/path/to/file.html')).to eq 'Just some content!'
+      expect(File.read(fixture_path '/path/to/file.html')).to eq 'Just some content!'
     end
   end
 end

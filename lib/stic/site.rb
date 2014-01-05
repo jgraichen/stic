@@ -3,7 +3,7 @@ module Stic
   #
   #
   class Site
-    attr_reader :blobs, :source, :target, :config, :generators
+    attr_reader :source, :target, :config, :generators
 
     def initialize(source, config)
       @config = config
@@ -43,6 +43,11 @@ module Stic
 
     def <<(blob)
       blobs << blob
+    end
+
+    def blobs(args = {})
+      return @blobs if args[:type].nil?
+      @blobs.select{|blob| blob.class <= args[:type] }
     end
 
     class << self

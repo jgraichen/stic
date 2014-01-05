@@ -1,8 +1,7 @@
 module Stic::Frontmatters
 
-  # The YAML frontmatter is an frontmatter parser
-  # providing capabilities to parse YAML embraced by
-  # three dashes. Example:
+  # The YAML front matter is parses YAML meta data embraced
+  # in three dashes from the beginning of a file. Example:
   #
   # ---
   # title: An Example

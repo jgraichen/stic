@@ -1,16 +1,17 @@
 module Stic::Generators
 
-  # The static generators adds file blobs for each static
-  # file to the generated output.
+  # The page generators adds page blobs for each page from
+  # define directory. Pages are printable content that
+  # may have a front matter and can be converted to HTML.
   #
-  # The source path for static files will be taken from
-  # generator config key `path` and defaults to `./files`.
+  # The source path for pages will be taken from
+  # generator config key `path` and defaults to `./pages`.
   #
   # You can override the path in your site configuration:
   #
   #     generators:
-  #       static:
-  #         path: ./custom_files
+  #       pages:
+  #         path: ./custom_pages
   #
   class Page < ::Stic::Generators::Static
 

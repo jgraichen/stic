@@ -7,20 +7,23 @@ module Stic
   # implement processing logic.
   #
   class File < Blob
-    attr_reader :base, :name, :path
+    attr_reader :base, :path, :name
 
     def initialize(args = {})
       super
 
-      @base = args.delete(:base) { raise ::ArgumentError.new 'Argument `:base` required.' }
-      @path = args.delete(:path) { raise ::ArgumentError.new 'Argument `:path` required.' }
+      base = args.delete(:base) { raise ::ArgumentError.new 'Argument `:base` required.' }
+      path = args.delete(:path) { raise ::ArgumentError.new 'Argument `:path` required.' }
+
+      @base = ::Pathname.new ::Stic::Utils.without_leading_slash base
+      @path = ::Pathname.new ::Stic::Utils.without_leading_slash path
       @name = args.delete(:name) || ::File.basename(@path)
     end
 
     # Return source relative path.
     #
     def relative_source_path
-      "#{base}/#{path}"
+      base.join path
     end
 
     # Return full source path.
@@ -32,7 +35,7 @@ module Stic
     # Return site relative URL.
     #
     def url_template
-      ::Stic::Utils.with_leading_slash path
+      ::Stic::Utils.with_leading_slash path.dirname.join(name).to_s
     end
 
     # Return final output as string.
@@ -59,7 +62,7 @@ module Stic
     # special input reading behavior.
     #
     def read
-      ::File.read source_path
+      ::File.read source_path.to_s
     end
 
     class << self

@@ -56,7 +56,7 @@ module Stic
       # directory will be used.
       #
       def lookup(dir = Dir.pwd)
-        file = ::File.lookup /^stic.ya?ml$/
+        file = ::File.lookup /^stic.ya?ml$/, dir
         file ? self.new(::File.dirname(file), Stic::Config.load(file)) : nil
       end
 

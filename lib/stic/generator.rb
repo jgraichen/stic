@@ -45,5 +45,11 @@ module Stic
     def run
       raise NotImplementedError.new "#{self.class.name}#run not implemented."
     end
+
+    protected
+    def log_msg(&block)
+      # TODO
+      # noop
+    end
   end
 end

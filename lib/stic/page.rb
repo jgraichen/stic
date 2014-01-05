@@ -3,25 +3,37 @@ module Stic
   #
   #
   class Page < File
-    attr_reader :site, :source
+    attr_reader :site, :source, :content
 
-    def initialize(site, source)
-      @site   = site
-      @source = source
+    def initialize(*args)
+      super
+      load
     end
 
     def render
+      templates = Tilt.templates_for name
+      output    = self.content.to_s
 
+      Tilt.templates_for(name).each do |engine|
+        output = engine.new{ output }.render(self)
+      end
+
+      output
     end
 
-    def data
-      @data ||= begin
-        if content =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
-          @content = $POSTMATCH
-          YAML.safe_load($1)
-        else
-          {}
-        end
+    def url_template
+      ::Stic::Utils.with_leading_slash path.gsub(/\.[^\/]+$/, '.html')
+    end
+
+    private
+    def load
+      content = self.read
+
+      if (parser = ::Stic::Frontmatter.parse(self, content))
+        @content = parser.content
+        @data.merge! parser.data
+      else
+        @content = content
       end
     end
 

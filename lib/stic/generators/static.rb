@@ -14,15 +14,27 @@ module Stic::Generators
   #
   class Static < ::Stic::Generator
 
+    def path_default
+      'files'
+    end
+
     def path
-      config[:path] || 'files'
+      @path ||= config[:path] || path_default
+    end
+
+    def full_path
+      @full_path ||= site.source.join(path)
+    end
+
+    def blob_class
+      ::Stic::File
     end
 
     def run
-      Dir[site.source.join(path).join("**/*")].each do |file|
+      Dir[full_path.join("**/*")].each do |file|
         if ::File.file? file
-          file = file[site.source.to_s.length .. -1]
-          site << ::Stic::File.new(site: site, file: file)
+          file = file[full_path.to_s.length .. -1]
+          site << blob_class.new(site: site, base: path, path: file)
         end
       end
     end

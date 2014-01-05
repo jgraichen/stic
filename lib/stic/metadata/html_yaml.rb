@@ -1,4 +1,4 @@
-module Stic::Frontmatters
+module Stic::Metadata
 
   # The HtmlYaml front matter parses YAML meta data from
   # an HTML comment at the beginning of a page:
@@ -7,7 +7,7 @@ module Stic::Frontmatters
   # title: An Example
   # --><html>...
   #
-  class HtmlYaml < ::Stic::Frontmatters::Yaml
+  class HtmlYaml < ::Stic::Metadata::Yaml
 
     HTML_YAML_REGEXP = /\A<!--\s*\n(?<data>.*?\n?)^(-->\s*)(?<content>.*)\z/m
 
@@ -16,5 +16,5 @@ module Stic::Frontmatters
     end
   end
 
-  ::Stic::Frontmatter.parsers << HtmlYaml
+  ::Stic::Metadata.parsers << HtmlYaml.new
 end

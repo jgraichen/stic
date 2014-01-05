@@ -1,4 +1,4 @@
-module Stic::Frontmatters
+module Stic::Metadata
 
   # The YAML front matter is parses YAML meta data embraced
   # in three dashes from the beginning of a file. Example:
@@ -7,7 +7,7 @@ module Stic::Frontmatters
   # title: An Example
   # ---
   #
-  class Yaml < ::Stic::Frontmatter
+  class Yaml < ::Stic::Metadata::Parser
 
     DASHED_YAML_REGEXP = /\A(?<data>---?\s*\n.*?\n?)^(---\s*$\n?)(?<content>.*)\z/m
 
@@ -20,15 +20,10 @@ module Stic::Frontmatters
 
     def parse(file, blob)
       if (match = regexp.match(blob))
-        self.data    = ::YAML.safe_load(match[:data])
-        self.content = match[:content]
-
-        true
-      else
-        false
+        [::YAML.safe_load(match[:data]), match[:content]]
       end
     end
   end
 
-  ::Stic::Frontmatter.parsers << Yaml
+  ::Stic::Metadata.parsers << Yaml.new
 end

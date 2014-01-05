@@ -5,36 +5,12 @@ module Stic
   class Page < File
     attr_reader :site, :source, :content
 
-    def initialize(*args)
-      super
-      load
-    end
-
-    def render
-      templates = Tilt.templates_for name
-      output    = self.content.to_s
-
-      Tilt.templates_for(name).each do |engine|
-        output = engine.new{ output }.render(self)
-      end
-
-      output
-    end
+    include ::Stic::Renderable
+    include ::Stic::Metadata
+    include ::Stic::Layoutable
 
     def url_template
-      ::Stic::Utils.with_leading_slash path.gsub(/\.[^\/]+$/, '.html')
-    end
-
-    private
-    def load
-      content = self.read
-
-      if (parser = ::Stic::Frontmatter.parse(self, content))
-        @content = parser.content
-        @data.merge! parser.data
-      else
-        @content = content
-      end
+      ::Stic::Utils.with_leading_slash path.to_s.gsub(/\.[^\/]+$/, '.html')
     end
 
     class << self

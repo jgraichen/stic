@@ -14,8 +14,15 @@ module Stic
   class Generator
     attr_reader :site
 
-    def initialize(site)
-      @site = site
+    # Return generator specific configuration from site.
+    # The configuration values are loaded from
+    # `generators.<generator name>`.
+    #
+    attr_reader :config
+
+    def initialize(site, config)
+      @site   = site
+      @config = ::ActiveSupport::HashWithIndifferentAccess.new (config && config[name]) || {}
     end
 
     # Return generator name. The name is derived from the
@@ -26,17 +33,6 @@ module Stic
       self.class.name.underscore.gsub(/_generator$/, '')
     end
 
-    # Return generator specific configuration from site.
-    # The configuration values are loaded from
-    # `generators.<generator name>`.
-    #
-    def config
-      @config ||= begin
-        conf = site.config['generators'] || {}
-        ::ActiveSupport::HashWithIndifferentAccess.new conf[name] || {}
-      end
-    end
-
     # Run this generator. This is the place to
     # implement custom logic and add blobs to the site.
     #
@@ -44,6 +40,10 @@ module Stic
     #
     def run
       raise NotImplementedError.new "#{self.class.name}#run not implemented."
+    end
+
+    def enabled?
+      %w(true yes).includes? config['disable'].to_s
     end
 
     protected

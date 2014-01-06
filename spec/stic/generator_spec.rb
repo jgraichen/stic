@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Stic::Generator do
-  let(:site) { double('site') }
-  let(:name) { 'MyCustomGenerator' }
-  let(:generator) { Stic::Generator.new site }
-  before { allow(generator.class).to receive(:name).and_return(name) }
+  let(:site)   { double('site') }
+  let(:name)   { 'MyCustomGenerator' }
+  let(:config) { {} }
+  let(:generator) { described_class.new site, config }
+  before { allow(described_class).to receive(:name).and_return(name) }
 
   describe '#name' do
     subject { generator.name }
@@ -13,8 +14,7 @@ describe Stic::Generator do
   end
 
   describe '#config' do
-    let(:config) { ::Stic::Config.new({'generators' => {'my_custom' => {'key' => 'value'}}}) }
-    before { allow(site).to receive(:config).and_return(config) }
+    let(:config) { {'my_custom' => {'key' => 'value'}} }
     subject { generator.config }
 
     it { should eq 'key' => 'value' }

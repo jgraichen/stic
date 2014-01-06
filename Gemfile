@@ -1,9 +1,13 @@
 source "https://rubygems.org"
 
+gem 'rake'
+
 group :development do
-  gem 'rake'
-  gem 'guard-rspec'
+  gem 'yard', '~> 0.8.6'
   gem 'listen'
+  gem 'guard-yard'
+  gem 'guard-rspec'
+  gem 'redcarpet', platform: :ruby
 end
 
 group :test do

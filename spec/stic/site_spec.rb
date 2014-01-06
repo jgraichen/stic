@@ -4,6 +4,7 @@ describe Stic::Site do
   let(:source) { '/site/src' }
   let(:config) { double("config") }
   let(:site)   { ::Stic::Site.new source, config }
+  before { allow(config).to receive(:[]).with('generators').and_return(nil) }
 
   describe '#source' do
     subject { site.source }
@@ -40,11 +41,13 @@ describe Stic::Site do
   describe '#generators' do
     let(:generator_class) { double("Generator") }
     let(:generator) { double("generator") }
+    let(:config) { {'key' => 'val'} }
+    before { allow(config).to receive(:[]).with('generators').and_return(config) }
     subject { site.generators }
 
     it 'should create an instance all registered generators' do
       expect(::Stic::Site).to receive(:generators).and_return([generator_class])
-      expect(generator_class).to receive(:new).with(kind_of(::Stic::Site)).and_return(generator)
+      expect(generator_class).to receive(:new).with(kind_of(::Stic::Site), config).and_return(generator)
 
       expect(subject).to eq [generator]
     end

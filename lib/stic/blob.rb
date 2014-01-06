@@ -41,9 +41,10 @@ module Stic
     #   should have the relative target path of e.g.
     #   `/2013/12/a-blog-post/index.html`.
     #
-    # The default blob relative target path will be derived
-    # from the relative URL. If the relative URL ends with
-    # a slash a `index.html` will be added.
+    # The default blob relative target path will be derived from the relative
+    # URL. If the relative URL ends with a slash a `index.html` will be added.
+    #
+    # @return [Path] the target file path relative to site target path
     #
     def relative_target_path
       relative_url[-1] == '/' ? "#{relative_url}index.html" : relative_url

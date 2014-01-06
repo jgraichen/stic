@@ -12,6 +12,8 @@ module Stic
   #
   class Blob
 
+    #!@group Attributes
+
     # The {Site} object.
     #
     # @return [Site] {Site} object.

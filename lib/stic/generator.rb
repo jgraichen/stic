@@ -12,6 +12,8 @@ module Stic
   #
   class Generator
 
+    #!@group Attributes
+
     # The {Site} object.
     #
     # @return [Site] {Site} object.

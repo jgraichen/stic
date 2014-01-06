@@ -8,6 +8,8 @@ module Stic
   #
   class Site
 
+    #!@group Attributes
+
     # The project's source path.
     #
     # @return [Path] The source path.

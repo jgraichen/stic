@@ -50,6 +50,42 @@ describe Stic::Site do
     end
   end
 
+  describe '#run' do
+    let(:generator)  { double('generator') }
+    let(:generators) { [generator] }
+    before  { allow(site).to receive(:generators).and_return(generators) }
+    before  { allow(generator).to receive(:run) }
+
+    it 'should invoke generators' do
+      expect(generator).to receive(:run)
+      site.run
+    end
+
+    it 'should pass generator to passed block' do
+      block = proc{}
+      expect(block).to receive(:call).with(generator)
+      site.run &block
+    end
+  end
+
+  describe '#write' do
+    let(:blob)  { double('blob') }
+    let(:blobs) { [blob] }
+    before  { allow(site).to receive(:blobs).and_return(blobs) }
+    before  { allow(blob).to receive(:write) }
+
+    it 'should write blob' do
+      expect(blob).to receive(:write)
+      site.write
+    end
+
+    it 'should pass blob to passed block' do
+      block = proc{}
+      expect(block).to receive(:call).with(blob)
+      site.write &block
+    end
+  end
+
   describe '#class' do
     describe '#generators' do
       subject { described_class.generators }

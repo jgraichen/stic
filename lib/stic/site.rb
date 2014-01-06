@@ -8,8 +8,6 @@ module Stic
   #
   class Site
 
-    #@!group Attributes
-
     # The project's source path.
     #
     # @return [Path] The source path.
@@ -36,6 +34,8 @@ module Stic
     #
     attr_reader :generators
 
+    #@!group Construction
+
     # Initializes new {Site} object.
     #
     # @param source [String, Path] The source directory where the rendered site
@@ -50,6 +50,22 @@ module Stic
       @blobs  = []
 
       @generators = self.class.generators.map{ |g| g.new self, config['generators'] }
+    end
+
+    #@!group Accessors
+
+    # Return list of {Blob}s.
+    #
+    # You can pass a class as `:type` option that will be used to filter the
+    # returned {Blob}s by Inheritance. Only {Blob}s of given class or {Blob}s
+    # that inherit given class will be returned.
+    #
+    # @param opts [Hash] Option hash.
+    # @option opts [Class] :type Class used as a filter.
+    #
+    def blobs(opts = {})
+      return @blobs if opts[:type].nil?
+      @blobs.select{|blob| blob.class <= opts[:type] }
     end
 
     #@!group Actions
@@ -107,20 +123,6 @@ module Stic
     #
     def <<(blob)
       blobs << blob
-    end
-
-    # Return list of {Blob}s.
-    #
-    # You can pass a class as `:type` option that will be used to filter the
-    # returned {Blob}s by Inheritance. Only {Blob}s of given class or {Blob}s
-    # that inherit given class will be returned.
-    #
-    # @param opts [Hash] Option hash.
-    # @option opts [Class] :type Class used as a filter.
-    #
-    def blobs(opts = {})
-      return @blobs if opts[:type].nil?
-      @blobs.select{|blob| blob.class <= opts[:type] }
     end
 
     class << self

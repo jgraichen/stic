@@ -12,11 +12,5 @@ module Stic
     def url_template
       ::Stic::Utils.with_leading_slash path.to_s.gsub(/\.[^\/]+$/, '.html')
     end
-
-    class << self
-      def valid?(file)
-        File.file? file
-      end
-    end
   end
 end

@@ -1,10 +1,10 @@
 module Stic
 
-  # A Blob represents a single output file. It does not assume any specific
+  # A {Blob} represents a single output file. It does not assume any specific
   # source or processing.
   #
-  # {Blob} provides the basic functionality {Site} expects for managing and
-  # writing blobs. {Blob} should not be used directly but sub-classed to
+  # Blob provides the basic functionality {Site} expects for managing and
+  # writing blobs. Blob should not be used directly but sub-classed to
   # provide an actual implementation of at least {#url_template} and {#render}.
   #
   # See {File} for a simple blob implementation serving a static file or {Page}

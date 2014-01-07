@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['jg@altimos.de']
   spec.summary       = %q{Opinionated extensible static site generator.}
   spec.description   = %q{Still an opinionated extensible static site generator.}
-  spec.homepage      = ''
-  spec.license       = 'MIT'
+  spec.homepage      = 'https://github.com/jgraichen/stic'
+  spec.license       = 'AGPLv3'
 
   spec.files         = Dir['**/*'].grep(%r{^((bin|lib|spec)/|.*\.gemspec|.*LICENSE.*|.*README.*)})
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

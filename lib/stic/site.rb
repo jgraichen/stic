@@ -6,6 +6,11 @@ module Stic
   # all functionality to invoke {Generator}s, manage and access {Blob}s and
   # write the rendered site project.
   #
+  # @example
+  #   site = ::Stic::Site.lookup
+  #   site.run
+  #   site.write
+  #
   class Site
 
     #!@group Attributes
@@ -79,11 +84,15 @@ module Stic
     # @yield [generator] Called before given {Generator} will be run.
     # @yieldparam generator [Generator] {Generator} to be run next.
     #
+    # @return [Self]
+    #
     def run(&block)
       generators.each do |generator|
         block.call generator if block
         generator.run
       end
+
+      self
     end
 
     # Write all added {Blob}s to their destination.
@@ -93,15 +102,21 @@ module Stic
     # @yield [blob] Called before given {Blob} will be written.
     # @yieldparam blob [Blob] {Blob} that will be written next.
     #
+    # @return [Self]
+    #
     def write(&block)
       blobs.each do |blob|
         block.call blob if block
         blob.write
       end
+
+      self
     end
 
     # Cleanup target directory. That will remove all files and directories
     # not referenced by any {Blob}.
+    #
+    # @return [Self]
     #
     def cleanup
       paths = self.blobs.map(&:target_path).map(&:to_s)
@@ -114,6 +129,8 @@ module Stic
           ::FileUtils.rm_rf path
         end
       end
+
+      self
     end
 
     # Add new {Blob} to site.

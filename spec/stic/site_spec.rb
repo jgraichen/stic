@@ -69,6 +69,10 @@ describe Stic::Site do
       expect(block).to receive(:call).with(generator)
       site.run &block
     end
+
+    it 'should return self' do
+      expect(site.run).to equal site
+    end
   end
 
   describe '#write' do
@@ -86,6 +90,16 @@ describe Stic::Site do
       block = proc{}
       expect(block).to receive(:call).with(blob)
       site.write &block
+    end
+
+    it 'should return self' do
+      expect(site.write).to equal site
+    end
+  end
+
+  describe '#cleanup' do
+    it 'should return self' do
+      expect(site.cleanup).to equal site
     end
   end
 

@@ -2,9 +2,9 @@ require 'safe_yaml'
 require 'active_support/core_ext'
 require 'active_support/concern'
 require 'tilt'
+require 'rubypath'
 
 require 'stic/version'
-require 'stic/core_ext/all'
 
 module Stic
   # Utilities

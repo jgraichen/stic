@@ -52,12 +52,10 @@ module Stic
     # URL would be '/blog/2014/a-blog-post.html'. Only `A-z0-9_` are allowed as
     # a placeholder.
     #
-    # @return [String] URL relative to site root.
+    # @return [Path] URL relative to site root but as an absolute path.
     #
     def relative_url
-      url_template.gsub /:([A-z0-9_]+)/ do |match|
-        data[match[1..-1]]
-      end
+      Path '/', url_template.each_component(empty: true).map{|fn| fn =~ /^:([A-z0-9_]+)$/ ? data[$1] : fn }
     end
 
     # Return a URL template that may contain placeholder
@@ -66,7 +64,8 @@ module Stic
     # @example
     #   /blog/:year/:month/:slug/
     #
-    # @return [String] URL relative to site root that can include placeholders.
+    # @return [Path] URL relative to site root that can include placeholders
+    #   but as an absolute path.
     #
     def url_template
       raise ::NotImplementedError.new "#{self.class.name}#url_template not implemented."
@@ -76,18 +75,14 @@ module Stic
     #
     # The relative target path must be based on the URL.
     #
-    # Example:
-    #   A blob with the URL of `/2013/12/a-blog-post/`
-    #   should have the relative target path of e.g.
-    #   `/2013/12/a-blog-post/index.html`.
+    # The default implementation joins the relative URL with `index.html` if
+    # the relative URL does not have any file extension. Otherwise the
+    # relative URL will be returned.
     #
-    # The default blob relative target path will be derived from the relative
-    # URL. If the relative URL ends with a slash a `index.html` will be added.
-    #
-    # @return [String] Target file path relative to site target path.
+    # @return [Path] Target file path relative to site target path.
     #
     def relative_target_path
-      relative_url[-1] == '/' ? "#{relative_url}index.html" : relative_url
+      relative_url.extensions.empty? ? relative_url.join('index.html') : relative_url
     end
 
     # Return full target path.
@@ -99,7 +94,7 @@ module Stic
     # @return [Pathname] Fill blob file path.
     #
     def target_path
-      site.target.join ::Stic::Utils.without_leading_slash relative_target_path
+      site.target.join relative_target_path.as_relative
     end
 
     # Return processed blob content as it can e.g. can be written to file.

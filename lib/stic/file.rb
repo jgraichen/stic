@@ -20,7 +20,7 @@ module Stic
     # `files`, and the rest as the {#path}. This way the source path will
     # include `/files` but the URL derived from {#path} will not.
     #
-    # @return [Pathname] Base path.
+    # @return [Path] Base path.
     #
     attr_reader :base
 
@@ -29,7 +29,7 @@ module Stic
     #
     # The path will be used to derive the {#url_template}.
     #
-    # @return [Pathname] File blob path.
+    # @return [Path] File blob path.
     #
     attr_reader :path
 
@@ -56,9 +56,9 @@ module Stic
       base = opts.delete(:base) { raise ::ArgumentError.new 'Argument `:base` required.' }
       path = opts.delete(:path) { raise ::ArgumentError.new 'Argument `:path` required.' }
 
-      @base = ::Pathname.new ::Stic::Utils.without_leading_slash base.to_s
-      @path = ::Pathname.new ::Stic::Utils.without_leading_slash path.to_s
-      @name = opts.delete(:name) || ::File.basename(@path)
+      @base = ::Path.new(base).as_relative
+      @path = ::Path.new(path).as_relative
+      @name = opts.delete(:name) || @path.name
     end
 
     #@!group Accessors
@@ -67,7 +67,7 @@ module Stic
     #
     # The relative source path is the {#base} path joined with the blob {#path}.
     #
-    # @return [Pathname] Relative source path.
+    # @return [Path] Relative source path.
     #
     def relative_source_path
       base.join path
@@ -77,29 +77,29 @@ module Stic
     #
     # The is the (absolute) source path including {Site#source}.
     #
-    # @return [Pathname] (Absolute) source path.
+    # @return [Path] (Absolute) source path.
     #
     def source_path
-      site.source.join ::Stic::Utils.without_leading_slash relative_source_path
+      site.source.join relative_source_path.as_relative
     end
 
     # Return site relative URL.
     #
     # File blobs do not have a variable URL template by default so the
     # {#url_template} is equal the {#relative_url} and consists of the blob
-    # {#path} and the blob file #{name}.
+    # {#path} and the blob file {#name}.
     #
     # As subclasses can override {#url_template} with custom behavior the file
     # blob class does not override the placeholder replacement login in
     # {#relative_url} but {#url_template} that returns a URL without
     # placeholders.
     #
-    # @return [Pathname] Relative blob URL.
+    # @return [Path] Relative blob URL.
     #
     # @see Blob#url_template
     #
     def url_template
-      ::Stic::Utils.with_leading_slash path.dirname.join(name).to_s
+      path.dirname.join(name).as_absolute
     end
 
     # Return final output as string.
@@ -136,7 +136,7 @@ module Stic
     # @return [String] Red content.
     #
     def read
-      ::File.read source_path.to_s
+      source_path.read
     end
   end
 end

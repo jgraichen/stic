@@ -12,7 +12,7 @@ describe Stic::File do
   describe '#base' do
     subject { file.base }
 
-    it { should be_a ::Pathname }
+    it { should be_a ::Path }
     it { expect(subject.to_s).to eq 'base/path' }
 
     context 'when initialized with leading slash' do
@@ -27,7 +27,7 @@ describe Stic::File do
   describe '#path' do
     subject { file.path }
 
-    it { should be_a ::Pathname }
+    it { should be_a ::Path }
     it { expect(subject.to_s).to eq 'to/file.txt' }
 
     context 'when initialized with leading slash' do
@@ -53,15 +53,15 @@ describe Stic::File do
   describe '#relative_source_path' do
     subject { file.relative_source_path }
 
-    it { should be_a ::Pathname }
+    it { should be_a ::Path }
     it { expect(subject.to_s).to eq 'base/path/to/file.txt' }
   end
 
   describe '#source_path' do
-    before { allow(site).to receive(:source).and_return(::Pathname.new('source')) }
+    before { allow(site).to receive(:source).and_return(::Path.new('source')) }
     subject { file.source_path }
 
-    it { should be_a ::Pathname }
+    it { should be_a ::Path }
     it { expect(subject.to_s).to eq 'source/base/path/to/file.txt' }
   end
 
@@ -93,12 +93,8 @@ describe Stic::File do
   end
 
   describe '#read' do
-    before { allow(site).to receive(:source).and_return(::Pathname.new('source')) }
-    before do
-      expect(::File).to receive(:read)
-        .with('source/base/path/to/file.txt')
-        .and_return('CONTENT!')
-    end
+    before { allow(site).to receive(:source).and_return(::Path.new('source')) }
+    before { Path('source/base/path/to/file.txt').mkfile.write 'CONTENT!' }
     subject { file.read }
 
     it { should eq 'CONTENT!' }

@@ -19,4 +19,8 @@ RSpec.configure do |config|
 
   # Raise errors for old :should expectation syntax.
   config.raise_errors_for_deprecations!
+
+  config.around(:each) do |example|
+    Path::Backend.mock &example
+  end
 end

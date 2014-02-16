@@ -30,10 +30,10 @@ module FileFixtures
     Dir.chdir(chdir) { yield }
   end
 
-  def fixture_path(path)
-    raise ArgumentError, "No fixture base set." unless fixture_base
+  def fixture_path(path = '', base = nil)
+    raise ArgumentError, "No fixture base set." unless fixture_base || base
 
-    fixture_dir = File.expand_path("../../fixtures/#{fixture_base}", __FILE__)
+    fixture_dir = File.expand_path("../../fixtures/#{base ? base : fixture_base}", __FILE__)
     return File.expand_path("./#{path}", fixture_dir)
   end
 end

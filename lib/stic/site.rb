@@ -52,8 +52,8 @@ module Stic
     #
     def initialize(source, config)
       @config = config
-      @source = ::Pathname.new source
-      @target = ::Pathname.new ::File.expand_path("site", source)
+      @source = Path.new source
+      @target = Path.new(source).join("site").expand
       @blobs  = []
 
       @generators = self.class.generators.map{ |g| g.new self, config['generators'] }
@@ -119,14 +119,14 @@ module Stic
     # @return [Self]
     #
     def cleanup
-      paths = self.blobs.map(&:target_path).map(&:to_s)
+      paths = self.blobs.map(&:target_path)
 
       # Cleanup not longer referenced files
-      Dir.glob(target.join('**/*')).each do |path|
-        if ::File.file?(path) && !paths.include?(path)
-          ::File.unlink path
-        elsif ::File.directory?(path) && !paths.any? { |p| p.starts_with? path }
-          ::FileUtils.rm_rf path
+      target.glob('**/*').each do |path|
+        if path.file? && !paths.include?(path)
+          path.unlink
+        elsif path.directory? && !paths.any? { |p| p.path.starts_with? path.to_s }
+          path.rm_rf
         end
       end
 
@@ -149,9 +149,9 @@ module Stic
       # If no directory is given the current working
       # directory will be used.
       #
-      def lookup(dir = Dir.pwd)
-        file = ::File.lookup /^stic.ya?ml$/, dir
-        file ? self.new(::File.dirname(file), Stic::Config.load(file)) : nil
+      def lookup(dir = Path.getwd)
+        file = Path.new(dir).lookup /^stic.ya?ml$/
+        file ? self.new(file.dirname, Stic::Config.load(file)) : nil
       end
 
       # Return list of available generator classes.

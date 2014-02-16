@@ -3,10 +3,14 @@ require 'spec_helper'
 describe Stic::Blob do
   let(:data) { nil }
   let(:site) { double('site') }
-  let(:blob) { Stic::Blob.new site: site, data: data }
+  let(:blob) do
+    blob = Stic::Blob.new site: site, data: data
+    allow(blob).to receive(:url_template) do url_template end
+    blob
+  end
 
   describe '#relative_url' do
-    before { allow(blob).to receive(:url_template).and_return(tpl) }
+    let(:url_template) { Path.new tpl }
     subject { blob.relative_url }
 
     context 'without placeholders' do
@@ -28,7 +32,7 @@ describe Stic::Blob do
   end
 
   describe '#relative_target_path' do
-    before { allow(blob).to receive(:relative_url).and_return(url) }
+    let(:url_template) { Path.new url }
     subject { blob.relative_target_path }
 
     context 'with full file URL' do
@@ -43,19 +47,19 @@ describe Stic::Blob do
   end
 
   describe '#target_path' do
-    before { allow(blob).to receive(:relative_target_path).and_return(path) }
-    before { allow(site).to receive(:target).and_return(Pathname.new('/path/to/stic-site')) }
+    let(:url_template) { Path.new path }
+    before { allow(site).to receive(:target).and_return(Path.new('/path/to/stic-site')) }
     subject { blob.target_path }
 
     context 'with path' do
       let(:path) { 'files/css/style.css' }
-      it { should eq Pathname.new '/path/to/stic-site/files/css/style.css' }
+      it { should eq '/path/to/stic-site/files/css/style.css' }
     end
   end
 
   describe '#write' do
     around { |example| within_temporary_fixture_base &example }
-    let(:target_path) { fixture_path '/path/to/file.html' }
+    let(:target_path) { Path.new fixture_path '/path/to/file.html' }
     let(:content) { 'Just some content!' }
 
     before { allow(blob).to receive(:target_path).and_return(target_path) }

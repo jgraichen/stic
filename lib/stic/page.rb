@@ -10,7 +10,7 @@ module Stic
     include ::Stic::Layoutable
 
     def url_template
-      ::Stic::Utils.with_leading_slash path.to_s.gsub(/\.[^\/]+$/, '.html')
+      path.swap_extensions('html').as_absolute
     end
   end
 end

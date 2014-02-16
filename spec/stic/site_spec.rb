@@ -9,14 +9,14 @@ describe Stic::Site do
   describe '#source' do
     subject { site.source }
 
-    it { should be_a ::Pathname }
+    it { should be_a Path }
     it { expect(subject.to_s).to eq '/site/src' }
   end
 
   describe '#target' do
     subject { site.target }
 
-    it { should be_a ::Pathname }
+    it { should be_a Path }
     it { expect(subject.to_s).to eq '/site/src/site' }
   end
 
@@ -117,25 +117,29 @@ describe Stic::Site do
       let(:args)   { [] }
       let(:config) { double("config") }
       subject { described_class.lookup *args }
-      before { expect(::Stic::Config).to receive(:load).and_return(:config) }
+      before do
+        Path.mock do |root, backend|
+          root.mkfile('stic.yaml').write YAML.dump({})
+          Path.getwd.mkfile('my/magic/stic.yml').write YAML.dump({})
+          Path.getwd.mkpath('my/magic/path').expand
+        end
+      end
 
       context 'without args' do
-        before { expect(::File).to receive(:lookup).with(kind_of(Regexp), dir).and_return('/abs/path/to/stic.yml') }
-
         it 'should return ::Stic::Site' do
           expect(subject).to be_a ::Stic::Site
         end
 
         it 'its source should be dir with found yaml' do
-          expect(subject.source.to_s).to eq '/abs/path/to'
+          expect(subject.source).to eq '/'
         end
       end
 
-      context 'with args' do
-        let(:args) { ['/my/magic/path'] }
-        it 'should pass given path to ::File.lookup' do
-          expect(::File).to receive(:lookup).with(kind_of(Regexp), '/my/magic/path').and_return('/my/magic/path/stic.yml')
-          subject
+      context 'with given path' do
+        let(:args) { ['my/magic/path'] }
+
+        it 'should return matching site' do
+          expect(subject.source).to eq Path('my/magic').expand
         end
       end
     end

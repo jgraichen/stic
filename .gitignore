@@ -20,3 +20,6 @@ example/Gemfile.lock
 example/site
 example/.bundle
 example/bin
+
+.idea
+*.iml

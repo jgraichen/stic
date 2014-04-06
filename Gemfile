@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'rubypath', path: '../ruby-path'
+gem 'rubypath', path: '~/workspace/ruby-path'
 
 group :development do
   gem 'yard', '~> 0.8.6'
@@ -12,7 +12,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec', '>= 3.0.0.beta1', '< 4'
+  gem 'rspec'
   gem 'coveralls'
 end
 

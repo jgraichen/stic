@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Stic::File do
   let(:base) { 'base/path' }
-  let(:path) { 'to/file.txt'}
-  let(:site) { double("site") }
+  let(:path) { 'to/file.txt' }
+  let(:site) { double('site') }
   let(:name) { nil }
   let(:args) { {site: site, base: base, path: path, name: name} }
   let(:file) { ::Stic::File.new args }
@@ -74,14 +74,14 @@ describe Stic::File do
   end
 
   describe '#render' do
-    before { expect(file).to receive(:content).and_return("CONTENT!") }
+    before { expect(file).to receive(:content).and_return('CONTENT!') }
     subject { file.render }
 
     it { should eq 'CONTENT!' }
   end
 
   describe '#content' do
-    before { expect(file).to receive(:read).once.and_return("CONTENT!") }
+    before { expect(file).to receive(:read).once.and_return('CONTENT!') }
     subject { file.content }
 
     it { should eq 'CONTENT!' }

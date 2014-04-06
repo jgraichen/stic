@@ -20,7 +20,11 @@ module Stic
     end
 
     def layout
-      data['layout'] || self.class.layout
+      @layout ||= site.layouts.find{|l| l.name == layout_name }
+    end
+
+    def layout_name
+      @layout_name ||= data['layout'] || self.class.layout
     end
   end
 end

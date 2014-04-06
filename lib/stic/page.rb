@@ -10,7 +10,7 @@ module Stic
     include ::Stic::Layoutable
 
     def url_template
-      path.swap_extensions('html').as_absolute
+      path.replace_extensions('html').as_absolute
     end
   end
 end

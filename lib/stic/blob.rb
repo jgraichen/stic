@@ -55,9 +55,10 @@ module Stic
     # @return [Path] URL relative to site root but as an absolute path.
     #
     def relative_url
-      Path '/', url_template.each_component(empty: true).map do |fn|
+      parts = url_template.each_component(empty: true).map do |fn|
         fn =~ /^:([A-z0-9_]+)$/ ? data[$1] : fn
       end
+      Path '/', parts
     end
 
     # Return a URL template that may contain placeholder

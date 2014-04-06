@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Stic::Site do
   let(:source) { '/site/src' }
-  let(:config) { double("config") }
+  let(:config) { double('config') }
   let(:site)   { ::Stic::Site.new source, config }
   before { allow(config).to receive(:[]).with('generators').and_return(nil) }
 
@@ -39,8 +39,8 @@ describe Stic::Site do
   end
 
   describe '#generators' do
-    let(:generator_class) { double("Generator") }
-    let(:generator) { double("generator") }
+    let(:generator_class) { double('Generator') }
+    let(:generator) { double('generator') }
     let(:config) { {'key' => 'val'} }
     before { allow(config).to receive(:[]).with('generators').and_return(config) }
     subject { site.generators }
@@ -67,7 +67,7 @@ describe Stic::Site do
     it 'should pass generator to passed block' do
       block = proc{}
       expect(block).to receive(:call).with(generator)
-      site.run &block
+      site.run(&block)
     end
 
     it 'should return self' do
@@ -89,7 +89,7 @@ describe Stic::Site do
     it 'should pass blob to passed block' do
       block = proc{}
       expect(block).to receive(:call).with(blob)
-      site.write &block
+      site.write(&block)
     end
 
     it 'should return self' do
@@ -115,8 +115,8 @@ describe Stic::Site do
     describe '#lookup' do
       let(:dir)    { Dir.pwd }
       let(:args)   { [] }
-      let(:config) { double("config") }
-      subject { described_class.lookup *args }
+      let(:config) { double('config') }
+      subject { described_class.lookup(*args) }
       before do
         Path.mock do |root, backend|
           root.mkfile('stic.yaml').write YAML.dump({})

@@ -1,4 +1,3 @@
-require 'safe_yaml'
 require 'active_support/core_ext'
 require 'active_support/concern'
 require 'tilt'

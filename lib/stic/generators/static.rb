@@ -31,7 +31,7 @@ module Stic::Generators
     end
 
     def run
-      Dir[full_path.join("**/*")].each do |file|
+      Dir[full_path.join('**/*')].each do |file|
         if ::File.file? file
           file = file[full_path.to_s.length .. -1]
           site << blob_class.new(site: site, base: path, path: file)

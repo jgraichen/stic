@@ -5,7 +5,7 @@ describe Stic::Blob do
   let(:site) { double('site') }
   let(:blob) do
     blob = Stic::Blob.new site: site, data: data
-    allow(blob).to receive(:url_template) do url_template end
+    allow(blob).to receive(:url_template){ url_template }
     blob
   end
 
@@ -58,7 +58,7 @@ describe Stic::Blob do
   end
 
   describe '#write' do
-    around { |example| within_temporary_fixture_base &example }
+    around { |example| within_temporary_fixture_base(&example) }
     let(:target_path) { Path.new fixture_path '/path/to/file.html' }
     let(:content) { 'Just some content!' }
 
@@ -73,7 +73,8 @@ describe Stic::Blob do
 
     it 'should write content to file' do
       blob.write
-      expect(File.read(fixture_path '/path/to/file.html')).to eq 'Just some content!'
+      expect(File.read(fixture_path '/path/to/file.html'))
+        .to eq 'Just some content!'
     end
   end
 end

@@ -9,11 +9,11 @@ module Stic
       end
 
       def with_leading_slash(path)
-        path[0]== '/' ? path : "/#{path}"
+        path[0] == '/' ? path : "/#{path}"
       end
 
       def without_leading_slash(path)
-        path.to_s.sub /^[\/]+/, ''
+        path.to_s.sub(/^[\/]+/, '')
       end
     end
   end

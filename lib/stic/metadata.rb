@@ -12,8 +12,9 @@ module Stic
     end
 
     private
+
     def load_metadata
-      data, @content = ::Stic::Metadata.parse(self, self.read)
+      data, @content = ::Stic::Metadata.parse(self, read)
       @data.merge! data if data
     end
 
@@ -23,7 +24,7 @@ module Stic
       end
 
       def parse(file, blob)
-        self.parsers.each do |parser|
+        parsers.each do |parser|
           metadata, content = parser.parse(file, blob)
           return [metadata, content] if metadata
         end

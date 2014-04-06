@@ -12,7 +12,7 @@ module Stic
   #
   class Blob
 
-    #!@group Attributes
+    # @!group Attributes
 
     # The {Site} object.
     #
@@ -28,7 +28,7 @@ module Stic
     #
     attr_reader :data
 
-    #@!group Construction
+    # @!group Construction
 
     # Initialize new blob.
     #
@@ -41,7 +41,7 @@ module Stic
       @data = ::ActiveSupport::HashWithIndifferentAccess.new opts.delete(:data)
     end
 
-    #@!group Accessors
+    # @!group Accessors
 
     # Return a the relative URL the blob should have in generated site. The URL
     # is based on the URL template where placeholders are replaced with values
@@ -55,7 +55,9 @@ module Stic
     # @return [Path] URL relative to site root but as an absolute path.
     #
     def relative_url
-      Path '/', url_template.each_component(empty: true).map{|fn| fn =~ /^:([A-z0-9_]+)$/ ? data[$1] : fn }
+      Path '/', url_template.each_component(empty: true).map do |fn|
+        fn =~ /^:([A-z0-9_]+)$/ ? data[$1] : fn
+      end
     end
 
     # Return a URL template that may contain placeholder
@@ -82,7 +84,11 @@ module Stic
     # @return [Path] Target file path relative to site target path.
     #
     def relative_target_path
-      relative_url.extensions.empty? ? relative_url.join('index.html') : relative_url
+      if relative_url.extensions.empty?
+        relative_url.join('index.html')
+      else
+        relative_url
+      end
     end
 
     # Return full target path.
@@ -111,7 +117,7 @@ module Stic
       "#<#{self.class.name}:#{object_id} #{relative_url}>"
     end
 
-    #@!group Actions
+    # @!group Actions
 
     # Write blob to file.
     #
@@ -121,7 +127,7 @@ module Stic
     # method to customize written result.
     #
     def write
-      unless ::File.directory? (dir = ::File.dirname(target_path))
+      unless ::File.directory?((dir = ::File.dirname(target_path)))
         FileUtils.mkdir_p dir
       end
 

@@ -9,7 +9,8 @@ module Stic::Metadata
   #
   class Yaml < ::Stic::Metadata::Parser
 
-    DASHED_YAML_REGEXP = /\A(?<data>---?\s*\n.*?\n?)^(---\s*$\n?)(?<content>.*)\z/m
+    DASHED_YAML_REGEXP =
+      /\A(?<data>---?\s*\n.*?\n?)^(---\s*$\n?)(?<content>.*)\z/m
 
     # Return Regexp to match YAML frontmatter and content.
     # Must provide two named match groups named `data` and

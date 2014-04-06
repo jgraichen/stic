@@ -8,7 +8,7 @@ module Stic
   #
   class File < Blob
 
-    #@!group Attributes
+    # @!group Attributes
 
     # The base path used to determine the source path. The base path will be
     # joined with the {Site} source and the file path like this:
@@ -41,7 +41,7 @@ module Stic
     #
     attr_reader :name
 
-    #@!group Construction
+    # @!group Construction
 
     # Initialize new file blob object.
     #
@@ -61,11 +61,12 @@ module Stic
       @name = opts.delete(:name) || @path.name
     end
 
-    #@!group Accessors
+    # @!group Accessors
 
     # Return blob source path relative to {Site#source}.
     #
-    # The relative source path is the {#base} path joined with the blob {#path}.
+    # The relative source path is the {#base} path joined
+    # with the blob {#path}.
     #
     # @return [Path] Relative source path.
     #
@@ -123,7 +124,7 @@ module Stic
       @content ||= read
     end
 
-    #@!group Actions
+    # @!group Actions
 
     # Read and return raw content.
     #

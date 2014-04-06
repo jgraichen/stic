@@ -12,7 +12,7 @@ module Stic
   #
   class Generator
 
-    #!@group Attributes
+    # @!group Attributes
 
     # The {Site} object.
     #
@@ -28,7 +28,7 @@ module Stic
     #
     attr_reader :config
 
-    #@!group Construction
+    # @!group Construction
 
     # Initialize new {Generator}.
     #
@@ -39,10 +39,10 @@ module Stic
     #
     def initialize(site, config)
       @site   = site
-      @config = ::ActiveSupport::HashWithIndifferentAccess.new (config && config[name]) || {}
+      @config = ::ActiveSupport::HashWithIndifferentAccess.new((config && config[name]) || {})
     end
 
-    #@!group Accessors
+    # @!group Accessors
 
     # Return generator name. The name is derived from the class name as an
     # underscore string with `_generator` striped from the end.
@@ -64,7 +64,7 @@ module Stic
       %w(true yes).includes? config['disable'].to_s
     end
 
-    #@!group Actions
+    # @!group Actions
 
     # Run this {Generator}. This is the place to implement custom logic and
     # add {Blob}s to the site.

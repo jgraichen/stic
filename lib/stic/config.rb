@@ -18,7 +18,7 @@ module Stic
 
     class << self
       def load(file)
-        self.new.tap{ |c| c.load file }
+        new.tap{|c| c.load file }
       end
     end
   end

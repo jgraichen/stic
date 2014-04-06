@@ -4,8 +4,10 @@ module Stic
     MINOR = 1
     PATCH = 0
     STAGE = 0
-    STRING= [MAJOR, MINOR, PATCH, STAGE].reject(&:nil?).join(".").freeze
+    STRING= [MAJOR, MINOR, PATCH, STAGE].reject(&:nil?).join('.').freeze
 
-    def self.to_s; STRING end
+    def self.to_s
+      STRING
+    end
   end
 end

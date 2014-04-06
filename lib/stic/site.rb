@@ -13,7 +13,7 @@ module Stic
   #
   class Site
 
-    #!@group Attributes
+    # @!group Attributes
 
     # The project's source path.
     #
@@ -41,7 +41,7 @@ module Stic
     #
     attr_reader :generators
 
-    #@!group Construction
+    # @!group Construction
 
     # Initializes new {Site} object.
     #
@@ -53,13 +53,15 @@ module Stic
     def initialize(source, config)
       @config = config
       @source = Path.new source
-      @target = Path.new(source).join("site").expand
+      @target = Path.new(source).join('site').expand
       @blobs  = []
 
-      @generators = self.class.generators.map{ |g| g.new self, config['generators'] }
+      @generators = self.class.generators.map do |generator_class|
+        generator_class.new self, config['generators']
+      end
     end
 
-    #@!group Accessors
+    # @!group Accessors
 
     # Return list of {Blob}s.
     #
@@ -75,7 +77,7 @@ module Stic
       @blobs.select{|blob| blob.class <= opts[:type] }
     end
 
-    #@!group Actions
+    # @!group Actions
 
     # Run all registered and initialized {Generator}s.
     #
@@ -119,13 +121,13 @@ module Stic
     # @return [Self]
     #
     def cleanup
-      paths = self.blobs.map(&:target_path)
+      paths = blobs.map(&:target_path)
 
       # Cleanup not longer referenced files
       target.glob('**/*').each do |path|
         if path.file? && !paths.include?(path)
           path.unlink
-        elsif path.directory? && !paths.any? { |p| p.path.starts_with? path.to_s }
+        elsif path.directory? && !paths.any?{|p| p.path.starts_with? path.to_s }
           path.rm_rf
         end
       end
@@ -150,8 +152,8 @@ module Stic
       # directory will be used.
       #
       def lookup(dir = Path.getwd)
-        file = Path.new(dir).lookup /^stic.ya?ml$/
-        file ? self.new(file.dirname, Stic::Config.load(file)) : nil
+        file = Path.new(dir).lookup(/^stic.ya?ml$/)
+        file ? new(file.dirname, Stic::Config.load(file)) : nil
       end
 
       # Return list of available generator classes.

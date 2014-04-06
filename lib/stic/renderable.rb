@@ -6,8 +6,7 @@ module Stic
   module Renderable
 
     def render
-      templates = Tilt.templates_for name
-      output    = self.content.to_s
+      output    = content.to_s
 
       Tilt.templates_for(name).each do |engine|
         output = engine.new{ output }.render(render_context, render_locals)

@@ -102,7 +102,7 @@ AlignParameters:
   #
   #     method_call(a,
   #       b)
-  EnforcedStyle: with_first_parameter
+  EnforcedStyle: with_fixed_indentation
   SupportedStyles:
     - with_first_parameter
     - with_fixed_indentation
@@ -255,7 +255,7 @@ LambdaCall:
     - braces
 
 LineLength:
-  Max: 79
+  Max: 99
 
 MethodDefParentheses:
   EnforcedStyle: require_parentheses

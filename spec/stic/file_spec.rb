@@ -1,25 +1,25 @@
 require 'spec_helper'
 
 describe Stic::File do
-  let(:base) { 'base/path' }
-  let(:path) { 'to/file.txt' }
-  let(:site) { double('site') }
-  let(:name) { nil }
-  let(:args) { {site: site, base: base, path: path, name: name} }
-  let(:file) { ::Stic::File.new args }
+  let(:source) { '/full/path/to/file.txt' }
+  let(:path)   { 'to/file.txt' }
+  let(:site)   { double('site') }
+  let(:name)   { nil }
+  let(:args)   { {site: site, source: source, path: path, name: name} }
+  let(:file)   { ::Stic::File.new args }
   subject { file }
 
-  describe '#base' do
-    subject { file.base }
+  describe '#source' do
+    subject { file.source }
 
     it { should be_a ::Path }
-    it { expect(subject.to_s).to eq 'base/path' }
+    it { expect(subject.to_s).to eq '/full/path/to/file.txt' }
 
-    context 'when initialized with leading slash' do
-      let(:base) { '/base/path' }
+    context 'when initialized with relative path' do
+      let(:source) { 'to/file.txt' }
 
-      it 'should be converted to relative path' do
-        expect(subject.to_s).to eq 'base/path'
+      it 'should be converted to absolute path' do
+        expect(subject.to_s).to eq '/root/to/file.txt'
       end
     end
   end
@@ -50,19 +50,11 @@ describe Stic::File do
     end
   end
 
-  describe '#relative_source_path' do
-    subject { file.relative_source_path }
-
-    it { should be_a ::Path }
-    it { expect(subject.to_s).to eq 'base/path/to/file.txt' }
-  end
-
   describe '#source_path' do
-    before { allow(site).to receive(:source).and_return(::Path.new('source')) }
     subject { file.source_path }
 
     it { should be_a ::Path }
-    it { expect(subject.to_s).to eq 'source/base/path/to/file.txt' }
+    it { expect(subject.to_s).to eq '/full/path/to/file.txt' }
   end
 
   describe '#url_template' do
@@ -93,8 +85,8 @@ describe Stic::File do
   end
 
   describe '#read' do
-    before { allow(site).to receive(:source).and_return(::Path.new('source')) }
-    before { Path('source/base/path/to/file.txt').mkfile.write 'CONTENT!' }
+    before { allow(site).to receive(:source).and_return(Path('source')) }
+    before { Path('/full/path/to/file.txt').mkfile.write 'CONTENT!' }
     subject { file.read }
 
     it { should eq 'CONTENT!' }

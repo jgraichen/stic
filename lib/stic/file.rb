@@ -10,22 +10,14 @@ module Stic
 
     # @!group Attributes
 
-    # The base path used to determine the source path. The base path will be
-    # joined with the {Site} source and the file path like this:
-    # `<site.source>/<base>/<path>`.
-    #
-    # For example the {::Stic::Generators::Static} loads files from
-    # `<site.source>/files` by default but added blobs should not contain
-    # `/files` in their URLs, so the generator adds file blobs with the base
-    # `files`, and the rest as the {#path}. This way the source path will
-    # include `/files` but the URL derived from {#path} will not.
+    # The full path to source file.
     #
     # @return [Path] Base path.
     #
-    attr_reader :base
+    attr_reader :source
 
-    # The file blob path contains the file path relative to {#base} and
-    # {Site#source}. That includes the file name.
+    # The virtual path to this file including file name. This path
+    # represents the target in the generated output.
     #
     # The path will be used to derive the {#url_template}.
     #
@@ -46,42 +38,29 @@ module Stic
     # Initialize new file blob object.
     #
     # @param opts [Hash] Initialization options.
-    # @option opts [#to_s] :base *Required* Base path. See {#base}.
+    # @option opts [#to_s] :source *Required* Base path. See {#base}.
     # @option opts [#to_s] :path *Required* Blob path. See {#path}.
     # @option opts [String] :name Optional blob file name. See {#name}.
     #
     def initialize(opts = {})
       super
 
-      base = opts.delete(:base) { raise ::ArgumentError.new 'Argument `:base` required.' }
-      path = opts.delete(:path) { raise ::ArgumentError.new 'Argument `:path` required.' }
+      source = opts.delete(:source) { raise ::ArgumentError.new 'Argument `:source` required.' }
+      path   = opts.delete(:path)   { raise ::ArgumentError.new 'Argument `:path` required.' }
 
-      @base = ::Path.new(base).as_relative
-      @path = ::Path.new(path).as_relative
-      @name = opts.delete(:name) || @path.name
+      @source = Path(source).expand
+      @path   = Path(path).as_relative
+      @name   = opts.delete(:name) || @path.name
     end
 
     # @!group Accessors
 
-    # Return blob source path relative to {Site#source}.
-    #
-    # The relative source path is the {#base} path joined
-    # with the blob {#path}.
-    #
-    # @return [Path] Relative source path.
-    #
-    def relative_source_path
-      base.join path
-    end
-
     # Return full source path.
-    #
-    # The is the (absolute) source path including {Site#source}.
     #
     # @return [Path] (Absolute) source path.
     #
     def source_path
-      site.source.join relative_source_path.as_relative
+      source
     end
 
     # Return site relative URL.

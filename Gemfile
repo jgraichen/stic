@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'rubypath', path: '~/workspace/ruby-path'
 
 group :development do
   gem 'yard', '~> 0.8.6'

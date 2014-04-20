@@ -51,10 +51,11 @@ module Stic
     #   loaded from configuration file located in the source directory.
     #
     def initialize(source, config)
-      @config = config
-      @source = Path.new source
-      @target = Path.new(source).join('site').expand
-      @blobs  = []
+      @config  = config
+      @source  = Path.new source
+      @target  = Path.new(source).join('site').expand
+      @blobs   = []
+      @layouts = Layout.load(self, @source, @config)
 
       @generators = self.class.generators.map do |generator_class|
         generator_class.new self, config['generators']
@@ -62,6 +63,12 @@ module Stic
     end
 
     # @!group Accessors
+
+    # Get layout with given name.
+    #
+    def layout(name)
+      @layouts.fetch(name)
+    end
 
     # Return list of {Blob}s.
     #

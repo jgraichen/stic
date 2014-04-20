@@ -10,21 +10,33 @@ module Stic
       # Define a class wide layout that will be used
       # for all instances if no other layout is specified.
       # Defaults to `default` if not set.
-      cattr_accessor :layout
+      # class_attribute :layout
       self.layout = 'default'
     end
 
-    def render
-      # TODO: Wrap in layout
-      super
+    def render(opts = {})
+      if layout
+        layout.render parent: self
+      else
+        super
+      end
     end
 
     def layout
-      @layout ||= site.layouts.find{|l| l.name == layout_name }
+      @layout ||= layout_name.blank? ? nil : site.layout(layout_name)
     end
 
     def layout_name
       @layout_name ||= data['layout'] || self.class.layout
+    end
+
+    #
+    module ClassMethods
+      attr_writer :layout
+
+      def layout
+        @layout ||= 'default'
+      end
     end
   end
 end

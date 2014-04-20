@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-describe Stic::Blob do
+describe Stic::Writable do
   let(:data) { nil }
   let(:site) { double('site') }
   let(:blob) do
     blob = Stic::Blob.new site: site, data: data
+    blob.extend Stic::Writable
     allow(blob).to receive(:url_template){ url_template }
     blob
   end

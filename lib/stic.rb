@@ -10,6 +10,8 @@ module Stic
   require 'stic/utils'
 
   # Logic modules
+  require 'stic/readable'
+  require 'stic/writable'
   require 'stic/layoutable'
   require 'stic/renderable'
   require 'stic/metadata'
@@ -19,6 +21,7 @@ module Stic
   require 'stic/config'
   require 'stic/file'
   require 'stic/generator'
+  require 'stic/layout'
   require 'stic/page'
   require 'stic/site'
 

@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Stic::Metadata
 
   # The YAML front matter is parses YAML meta data embraced

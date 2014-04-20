@@ -6,7 +6,7 @@ module Stic
   # or by additional generators etc.
   #
   module Metadata
-    def initialize(*args)
+    def initialize(*)
       super
       load_metadata
     end

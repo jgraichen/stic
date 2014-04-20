@@ -5,6 +5,7 @@ describe Stic::Site do
   let(:config) { double('config') }
   let(:site)   { ::Stic::Site.new source, config }
   before { allow(config).to receive(:[]).with('generators').and_return(nil) }
+  before { allow(config).to receive(:[]).with('layouts').and_return(nil) }
 
   describe '#source' do
     subject { site.source }

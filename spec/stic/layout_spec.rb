@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe Stic::Layout do
   let(:site)    { double 'site' }
-  let(:name)    { 'default' }
   let(:path)    { Path '/layouts/default.html.erb' }
-  let(:layout)  { Stic::Layout.new site: site, name: name, source: path }
+  let(:layout)  { Stic::Layout.new site: site, source: path }
   let(:content) { '<default><%= yield %></default>' }
   before do
     Path.mock {|root, backend| path.mkfile.write content }
@@ -12,6 +11,10 @@ describe Stic::Layout do
 
   describe '#render' do
     let(:blob) { double 'blob' }
+    before do
+      allow(blob).to receive(:locals).and_return({})
+      allow(blob).to receive(:render).and_return('CONTENT')
+    end
 
     subject { layout.render blob }
 
@@ -28,9 +31,9 @@ describe Stic::Layout do
           backend.cwd = '/'
 
           dir = root.mkdir 'layouts'
-          dir.touch 'default.html.erb'
-          dir.touch 'post.html.slim'
-          dir.touch 'author.html.haml'
+          dir.touch 'default.erb'
+          dir.touch 'post.slim'
+          dir.touch 'author.haml'
         end
       end
 

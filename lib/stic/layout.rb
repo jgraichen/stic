@@ -2,15 +2,29 @@ module Stic
 
   # = Stic::Layout
   #
-  # A {Layout} allows to wrap a rendered content into
-  # something else that may consist of templated yielding
-  # the given content.
+  # A {Layout} allows to wrap a blob into a layout. The
+  # rendered layout itself my be wrapped into another
+  # layout.
   #
-  class Layout < Blob
+  class Layout
+    include SiteBase
     include Readable
     include Renderable
     include Metadata
-    include Layoutable
+
+    def render(blob)
+      locals = blob.locals.merge(data: data)
+
+      if layout
+        render_content(locals) { layout.render(blob) }
+      else
+        render_content(locals) { blob.render layout: false }
+      end
+    end
+
+    def layout
+      @layout ||= layout_name.blank? ? nil : site.layout(layout_name)
+    end
 
     # Return name of layout this layout should be wrapped in.
     #

@@ -6,17 +6,9 @@ module Stic
   module Layoutable
     extend ::ActiveSupport::Concern
 
-    included do
-      # Define a class wide layout that will be used
-      # for all instances if no other layout is specified.
-      # Defaults to `default` if not set.
-      # class_attribute :layout
-      self.layout = 'default'
-    end
-
     def render(opts = {})
-      if layout
-        layout.render parent: self
+      if layout && !opts[:layout]
+        layout.render self
       else
         super
       end
@@ -35,7 +27,7 @@ module Stic
       attr_writer :layout
 
       def layout
-        @layout ||= 'default'
+        @layout ||= ''
       end
     end
   end

@@ -10,11 +10,11 @@ module Stic
   require 'stic/utils'
 
   # Logic modules
-  require 'stic/readable'
-  require 'stic/writable'
   require 'stic/layoutable'
+  require 'stic/readable'
   require 'stic/renderable'
   require 'stic/metadata'
+  require 'stic/site_base'
 
   # Core classes
   require 'stic/blob'
@@ -23,6 +23,7 @@ module Stic
   require 'stic/generator'
   require 'stic/layout'
   require 'stic/page'
+  require 'stic/renderer'
   require 'stic/site'
 
   module Generators

@@ -8,25 +8,19 @@ module Stic
     # Return rendered content.
     #
     def render(opts = {})
-      render_content opts
+      render_content locals
     end
 
     # Render blob content without layout.
     #
-    def render_content(opts = {})
-      output  = content
-      context = opts[:context] || Object.new
-      locals  = opts[:locals]  || self.locals
-      locals  = locals.merge(data: self.data)
-      path    = source_path if respond_to?(:source_path)
+    def render_content(locals, &block)
+      renderer.render(locals.merge(data: data), &block)
+    end
 
-      Tilt.templates_for(render_name).each do |engine|
-        output = engine.new(path){ output.to_s }.render(context, locals) do
-          opts[:parent].render_content(context: context, locals: locals)
-        end
+    def renderer
+      @renderer ||= begin
+        Renderer.new(self)
       end
-
-      output.html_safe
     end
 
     # Return the file name for rendering. Should include all
@@ -40,7 +34,7 @@ module Stic
     # in render context.
     #
     def locals
-      {site: site, config: site.config}
+      {site: site}
     end
   end
 end

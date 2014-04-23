@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="43.222927"
-   height="9.4308634"
+   width="911.99921"
+   height="136.923"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="stic.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="21.911773"
-     inkscape:cy="6.5183711"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="347.93498"
+     inkscape:cy="116.60543"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     fit-margin-top="2"
-     fit-margin-left="2"
-     fit-margin-right="2"
-     fit-margin-bottom="2"
+     fit-margin-top="6"
+     fit-margin-left="6"
+     fit-margin-right="6"
+     fit-margin-bottom="6"
      inkscape:window-width="1389"
      inkscape:window-height="773"
      inkscape:window-x="2278"
@@ -55,29 +55,33 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-242.89824,-440.51158)">
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:0.34157753;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2989"
-       width="12.269419"
-       height="5.0892859"
-       x="245.06903"
-       y="442.68237" />
-    <text
-       xml:space="preserve"
-       style="font-size:4px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"
-       x="246.22469"
-       y="446.40125"
-       id="text3759"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3761"
+     transform="translate(191.54013,-376.7657)">
+    <g
+       id="g3796"
+       transform="matrix(22.945615,0,0,23.004266,-5804.8759,-9796.8935)">
+      <rect
+         y="442.68237"
+         x="245.06903"
+         height="5.0892859"
+         width="12.269419"
+         id="rect2989"
+         style="fill:none;stroke:#000000;stroke-width:0.34157753;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3759"
+         y="446.40125"
          x="246.22469"
-         y="446.40125"><tspan
-   style="fill:#d40000"
-   id="tspan3763">st</tspan>at<tspan
-   style="fill:#d40000"
-   id="tspan3765">ic</tspan>  site generator</tspan></text>
+         style="font-size:4px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"
+         xml:space="preserve"><tspan
+           y="446.40125"
+           x="246.22469"
+           id="tspan3761"
+           sodipodi:role="line"><tspan
+   id="tspan3763"
+   style="fill:#d40000">st</tspan>at<tspan
+   id="tspan3765"
+   style="fill:#d40000">ic</tspan>  site generator</tspan></text>
+    </g>
     <text
        xml:space="preserve"
        style="font-size:4px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Open Sans;-inkscape-font-specification:Open Sans"

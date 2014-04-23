@@ -36,6 +36,10 @@ module Stic
       @path.basename
     end
 
+    def to_s
+      "#<#{self.class.name}:#{object_id} #{source_path}>"
+    end
+
     class << self
       def load(site, source, config)
         layouts = {}

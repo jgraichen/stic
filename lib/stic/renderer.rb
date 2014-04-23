@@ -11,18 +11,21 @@ module Stic
     def render(locals, &block)
       engines = Tilt.templates_for(path.basename)
       engines.reduce(blob.content) do |content, engine|
-        engine.new(path){ content.to_s }.render(environment, locals, &block)
+        engine.new(path){ content.to_s }.render(Environment, locals, &block)
       end.html_safe
     end
 
-    def environment
-      self.class.environment
-    end
-
-    class << self
-      def environment
-        @environment ||= Module.new
-      end
+    # A module to include additional rendering helper functions.
+    #
+    # @example
+    #   module MyHelpers
+    #     def help
+    #       "Help here!"
+    #     end
+    #   end
+    #   Stic::Renderer::Environment.extend MyHelpers
+    #
+    module Environment
     end
   end
 end

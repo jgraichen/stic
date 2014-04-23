@@ -7,8 +7,8 @@ module Stic
     extend ::ActiveSupport::Concern
 
     def render(opts = {})
-      if layout && !opts[:layout]
-        layout.render self
+      if layout && (opts[:layout].nil? || opts[:layout])
+        layout.render(self) { render(layout: false) }
       else
         super
       end
@@ -27,7 +27,7 @@ module Stic
       attr_writer :layout
 
       def layout
-        @layout ||= ''
+        @layout ||= 'default'
       end
     end
   end

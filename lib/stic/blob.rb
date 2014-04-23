@@ -84,5 +84,9 @@ module Stic
         file.write render
       end
     end
+
+    def to_s
+      "#<#{self.class.name}:#{object_id} #{relative_target_path}>"
+    end
   end
 end

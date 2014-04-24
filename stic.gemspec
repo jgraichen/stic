@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'tilt'
-  spec.add_runtime_dependency 'activesupport', '>= 4'
+  spec.add_runtime_dependency 'activesupport', '~> 4.0'
   spec.add_runtime_dependency 'rubypath', '~> 0.2'
 
   spec.add_development_dependency 'bundler', '~> 1.3'

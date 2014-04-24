@@ -1,5 +1,5 @@
 module Stic
-
+  #
   # = Stic::Layout
   #
   # A {Layout} allows to wrap a blob into a layout. The

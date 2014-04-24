@@ -13,10 +13,9 @@ describe Stic::Layout do
     let(:blob) { double 'blob' }
     before do
       allow(blob).to receive(:locals).and_return({})
-      allow(blob).to receive(:render).and_return('CONTENT')
     end
 
-    subject { layout.render blob }
+    subject { layout.render(blob){ 'CONTENT' } }
 
     it { should eq '<default>CONTENT</default>' }
   end

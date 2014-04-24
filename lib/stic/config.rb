@@ -12,7 +12,7 @@ module Stic
     end
 
     def load(file)
-      options.deep_merge ::YAML.safe_load file.read
+      options.deep_merge ::YAML.load file.read
       files << file
     end
 

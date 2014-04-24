@@ -23,7 +23,7 @@ module Stic::Metadata
 
     def parse(file, blob)
       if (match = regexp.match(blob))
-        [::YAML.safe_load(match[:data]), match[:content]]
+        [::YAML.load(match[:data]), match[:content]]
       end
     end
   end

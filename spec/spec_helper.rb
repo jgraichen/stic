@@ -7,6 +7,8 @@ if ENV['CI'] || ENV['COVERAGE']
   end
 end
 
+Bundler.require :default, :test
+
 # Load stic
 require 'stic'
 

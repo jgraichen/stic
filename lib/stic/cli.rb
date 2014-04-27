@@ -14,6 +14,9 @@ module Stic
         exit 1
       end
 
+      require 'bundler/setup'
+      Bundler.require :default
+
       STDOUT.puts  " Configuration files: #{site.config.files.join(", ")}"
       STDOUT.puts  "              Source: #{site.source}"
       STDOUT.puts  "              Target: #{site.target}"

@@ -15,7 +15,7 @@ module Stic
 
     def load_metadata
       data, @content = ::Stic::Metadata.parse(self, read)
-      @data.merge! data if data
+      @data.merge! data if data.is_a?(Hash)
     end
 
     class << self

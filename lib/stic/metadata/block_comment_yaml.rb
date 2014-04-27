@@ -28,7 +28,7 @@ module Stic::Metadata
       BLOCK_COMMENT_YAML_REGEXP
     end
 
-    def preprocess_data(data)
+    def preprocess_data(blob, data)
       data.gsub(/^\s*\*/, "\n")
     end
   end

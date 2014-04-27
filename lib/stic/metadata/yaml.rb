@@ -21,24 +21,24 @@ module Stic::Metadata
       DASHED_YAML_REGEXP
     end
 
-    def preprocess_data(data)
+    def preprocess_data(blob, data)
       data
     end
 
-    def preprocess_content(content)
+    def preprocess_content(blob, content)
       content
     end
 
-    def match(blob)
-      regexp.match(blob)
+    def match(blob, str)
+      regexp.match(str)
     end
 
-    def parse(file, blob)
-      if (match = match(blob))
+    def parse(blob, str)
+      if (match = match(blob, str))
         begin
           [
-            ::YAML.load(preprocess_data(match[:data])),
-            preprocess_content(match[:content])
+            ::YAML.load(preprocess_data(blob, match[:data])),
+            preprocess_content(blob, match[:content])
           ]
         rescue Psych::SyntaxError
           nil

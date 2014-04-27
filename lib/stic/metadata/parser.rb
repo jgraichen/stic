@@ -14,7 +14,7 @@ module Stic::Metadata
     # e.g. to check file extension if front matter is
     # restricted to specific file format.
     #
-    def parse(file, blob)
+    def parse(blob, str)
       raise NotImplementedError.new "#{self.class.name}#parse must be implemented by subclass."
     end
   end

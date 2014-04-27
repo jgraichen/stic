@@ -15,20 +15,29 @@ module Stic::Metadata
   #
   class CommentYaml < ::Stic::Metadata::Yaml
 
-    def match(blob)
-      if blob =~ %r{\A(\s*(//|#)\s*)}
-        sep = $1
-        data, content = [], []
-        blob.each_line do |line|
-          if !line.starts_with?(sep) .. false
-            content << line
-          else
-            data << line[sep.length..-1]
-          end
+    def match(blob, str)
+      if (m = %r{\A(\s*(//|#)\s*)(.+:.+)}.match(str))
+        sep = m[1]
+        case sep.strip
+          when '#'
+            return nil if %w(md markdown).include? blob.path.ext
         end
 
-        {data: data.join("\n"), content: content.join("\n")}
+        scan_data str, sep
       end
+    end
+
+    def scan_data(str, sep)
+      data, content = [], []
+      str.each_line do |line|
+        if !line.starts_with?(sep) .. false
+          content << line
+        else
+          data << line[sep.length..-1]
+        end
+      end
+
+      {data: data.join("\n"), content: content.join("\n")}
     end
   end
 

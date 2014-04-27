@@ -55,7 +55,7 @@ module Stic
       @source  = Path.new source
       @target  = Path.new(source).join('site').expand
       @blobs   = []
-      @layouts = Layout.load(self, @source, @config)
+      @layouts = []
 
       @generators = self.class.generators.map do |generator_class|
         generator_class.new self, config['generators']
@@ -96,6 +96,8 @@ module Stic
     # @return [Self]
     #
     def run(&block)
+      @layouts = Layout.load(self, @source, @config)
+
       generators.each do |generator|
         block.call generator if block
         generator.run

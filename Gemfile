@@ -13,6 +13,8 @@ end
 group :test do
   gem 'rspec'
   gem 'coveralls'
+  gem 'pry'
+  gem 'pry-nav'
 end
 
 platform :rbx do

@@ -19,16 +19,11 @@ module Stic
     end
 
     def layout_name
-      @layout_name ||= data['layout'] || self.class.layout
+      @layout_name ||= data['layout'] || default_layout
     end
 
-    #
-    module ClassMethods
-      attr_writer :layout
-
-      def layout
-        @layout ||= 'default'
-      end
+    def default_layout
+      'default'
     end
   end
 end

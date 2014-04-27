@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem 'stic', path: '..'
 gem 'redcarpet'
 gem 'slim'
+gem 'sass'
 
 gem 'pry'
 gem 'pry-nav'

@@ -3,6 +3,7 @@ require 'active_support/core_ext'
 require 'active_support/concern'
 require 'tilt'
 require 'rubypath'
+require 'yaml'
 
 require 'stic/version'
 
@@ -36,5 +37,7 @@ module Stic
     require 'stic/metadata/parser'
     require 'stic/metadata/yaml'
     require 'stic/metadata/html_yaml'
+    require 'stic/metadata/comment_yaml'
+    require 'stic/metadata/block_comment_yaml'
   end
 end

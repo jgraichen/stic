@@ -21,9 +21,28 @@ module Stic::Metadata
       DASHED_YAML_REGEXP
     end
 
+    def preprocess_data(data)
+      data
+    end
+
+    def preprocess_content(content)
+      content
+    end
+
+    def match(blob)
+      regexp.match(blob)
+    end
+
     def parse(file, blob)
-      if (match = regexp.match(blob))
-        [::YAML.load(match[:data]), match[:content]]
+      if (match = match(blob))
+        begin
+          [
+            ::YAML.load(preprocess_data(match[:data])),
+            preprocess_content(match[:content])
+          ]
+        rescue Psych::SyntaxError
+          nil
+        end
       end
     end
   end

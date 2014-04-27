@@ -12,7 +12,8 @@ module Stic
     end
 
     def load(file)
-      options.deep_merge ::YAML.load file.read
+      data = ::YAML.load(file.read) if file.exist?
+      options.deep_merge(data) if data.is_a?(Hash)
       files << file
     end
 

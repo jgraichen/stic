@@ -38,7 +38,7 @@ describe Stic::Layout do
 
       subject { Stic::Layout.load(site, source, config) }
 
-      it { should have(3).items }
+      it { expect(subject.size).to eq 3 }
       it { should include 'default', 'post', 'author' }
     end
   end

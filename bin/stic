@@ -5,4 +5,4 @@ require 'rubygems'
 require 'stic'
 require 'stic/cli'
 
-Stic::CLI.start(ARGV)
+Stic::CLI.run(ARGV)

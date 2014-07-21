@@ -14,7 +14,7 @@ describe 'Static Generator' do
   it 'should add static file blobs' do
     generator.run
 
-    expect(site.blobs).to have(2).items
+    expect(site.blobs.size).to eq 2
     expect(site.blobs.map(&:source)).to match_array \
       %w(/files/stylesheets/main.css /files/stylesheets/typo.css)
   end

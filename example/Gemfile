@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem 'stic', path: '..'
-gem 'redcarpet'
+gem 'redcarpet', platform: :ruby
 gem 'slim'
 gem 'sass'
 

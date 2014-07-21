@@ -1,48 +1,61 @@
-require 'thor'
+require 'opt'
 
 module Stic
-
   #
-  class CLI < ::Thor
-    package_name 'stic'
-
-    desc 'build', 'Build site'
-    def build
-      unless (site = Stic::Site.lookup)
-        puts 'Not in a stic site. You need to run the ' \
-             '`stic` command within a stic site.'
-        exit 1
+  module CLI
+    class << self
+      def parser
+        @opt ||= ::Opt.new.tap do |opt|
+          opt.option '--help, -h'
+          opt.option '--version, -v'
+        end
       end
 
-      require 'bundler/setup'
-      Bundler.require :default
+      def run(argv)
+        result = parser.parse(argv)
 
-      STDOUT.puts  " Configuration files: #{site.config.files.join(", ")}"
-      STDOUT.puts  "              Source: #{site.source}"
-      STDOUT.puts  "              Target: #{site.target}"
-      STDOUT.print '       Generating ... '
-      STDOUT.flush
-
-      str_length = 0
-
-      log = lambda do |str|
-        STDOUT.print "\r                      " + ' ' * str_length
-        STDOUT.print "\r                  ... #{str}"
-        STDOUT.flush
-        str_length = str.length
+        if result.version
+          $stdout.puts "stic v#{Stic::VERSION}"
+          exit 0
+        elsif result.help
+          help
+          exit 0
+        else
+          result.command.shift.run(result)
+        end
       end
 
-      begin
-        site.run {|generator| log.call "Running #{generator.class.name}" }
-        site.write {|blob| log.call "Write #{blob.relative_url}" }
-        site.cleanup
-      rescue => e
-        STDOUT.puts
-        raise e
+      def help
+        $stdout.puts <<-EOF.gsub(/^ {10}/, '')
+          NAME
+                stic - The static site generator. v#{Stic::VERSION}
+
+          SYNOPSIS
+                stic [command] [options]
+
+          DESCRIPTION
+                stic is a static site generation tool used to generate a set
+                of styled and linked HTML pages from different sources
+                like markdown.
+
+          GLOBAL OPTIONS
+                --help, -h
+                    Print this help text.
+                --version, -v
+                    Print stic version.
+
+          COMMANDS
+EOF
+        parser.commands.each do |command|
+          $stdout.puts command.to_help
+        end
       end
 
-      log.call 'done.'
-      STDOUT.puts
+      require 'stic/cli/command'
+
+      ::Dir[::File.expand_path('../cli/commands/*.rb', __FILE__)].each do |file|
+        require file
+      end
     end
   end
 end

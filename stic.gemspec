@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Stic::VERSION
   spec.authors       = ['Jan Graichen']
   spec.email         = ['jg@altimos.de']
-  spec.summary       = %q{Opinionated extensible static site generator.}
-  spec.description   = %q{Still an opinionated extensible static site generator.}
+  spec.summary       = %q(Opinionated extensible static site generator.)
+  spec.description   = %q(Still an opinionated extensible static site generator.)
   spec.homepage      = 'https://github.com/jgraichen/stic'
   spec.license       = 'AGPLv3'
 
@@ -18,10 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'tilt'
   spec.add_runtime_dependency 'activesupport', '~> 4.0'
   spec.add_runtime_dependency 'rubypath', '~> 0.2', '>= 0.3.0'
+  spec.add_runtime_dependency 'opt', '~> 0.3'
 
   spec.add_development_dependency 'bundler', '~> 1.3'
 end

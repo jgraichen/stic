@@ -35,6 +35,15 @@ $ bin/stic
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
 
+## ToDos
+
+* Post-Processors
+** Syntax highlighting for code blocks
+** oembed?
+* Checksum-based metadata.json to compile only changed things
+* Blog related generators
+* Sprockets for pimped assets
+
 ## License
 
 ```

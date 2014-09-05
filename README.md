@@ -1,4 +1,4 @@
-# ![RbNaCl](https://raw.github.com/jgraichen/stic/master/images/stic.png)
+# ![RbNaCl](https://raw.githubusercontent.com/jgraichen/stic/master/stic.png)
 
 Opinionated extensible static site generator.
 

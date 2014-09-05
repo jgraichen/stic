@@ -15,6 +15,7 @@ group :test do
   gem 'coveralls'
   gem 'pry'
   gem 'pry-nav'
+  gem 'codeclimate-test-reporter', require: false
 end
 
 platform :rbx do

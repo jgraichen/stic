@@ -1,8 +1,11 @@
 language: ruby
-bundler_args: --without development
+bundler_args: "--without development"
 rvm:
 - '2.1'
 - '2.0'
 - 1.9.3
 - jruby
 - rbx
+env:
+  global:
+    secure: UEUU1vJzuVkGpTAKaqvNum+fLsJVv7c9QBxoZBF/nOsYy1cTrwj2SvXqjurQZjw7g4z//EvOPrjx28XChtAAGEKTIqfnxWbAXO8vkJRGXvABfYmQ4DSVIcEkmOv/7P3ac+eIsoRu+84c0EsRInV9hMJpsDECu9ZsGZmDlE7S9lw=

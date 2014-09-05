@@ -10,6 +10,7 @@ require 'stic/version'
 module Stic
   # Utilities
   require 'stic/utils'
+  require 'stic/errors'
 
   # Logic modules
   require 'stic/layoutable'

@@ -40,8 +40,8 @@ module Stic::Metadata
             ::YAML.load(preprocess_data(blob, match[:data])),
             preprocess_content(blob, match[:content])
           ]
-        rescue Psych::SyntaxError
-          nil
+        rescue Psych::SyntaxError => err
+          raise Stic::InvalidMetadata.new blob: blob
         end
       end
     end

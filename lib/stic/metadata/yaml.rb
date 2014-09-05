@@ -3,11 +3,12 @@ require 'yaml'
 module Stic::Metadata
 
   # The YAML front matter is parses YAML meta data embraced
-  # in three dashes from the beginning of a file. Example:
+  # in three dashes from the beginning of a file.
   #
-  # ---
-  # title: An Example
-  # ---
+  # @example
+  #   ---
+  #   title: An Example
+  #   ---
   #
   class Yaml < ::Stic::Metadata::Parser
 

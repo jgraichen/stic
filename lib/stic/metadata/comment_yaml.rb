@@ -3,15 +3,13 @@ module Stic::Metadata
   # The CommentYaml front matter parses YAML meta data from
   # an line comment at the beginning of a page:
   #
-  # ```
-  # // title: An Example
-  # // author: John
-  # ```
+  # @example Backslash style comments
+  #   // title: An Example
+  #   // author: John
   #
-  # ```
-  # # title: An Example
-  # # author: John
-  # ```
+  # @example Hash style comments
+  #   # title: An Example
+  #   # author: John
   #
   class CommentYaml < ::Stic::Metadata::Yaml
 

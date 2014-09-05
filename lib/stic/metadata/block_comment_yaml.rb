@@ -1,23 +1,20 @@
 module Stic::Metadata
 
   # The BlockCommentYaml front matter parses YAML meta data
-  # from an block comment at the beginning of a page:
+  # from an block comment at the beginning of a page.
   #
-  # ```
-  # /**
-  #  * title: An Example
-  #  */
-  # ```
+  # @example
+  #   /**
+  #    * title: An Example
+  #    */
   #
-  # ```
-  # /*
-  # title: An Example
-  # */
-  # ```
+  # @example
+  #   /*
+  #   title: An Example
+  #   */
   #
-  # ```
-  # /* title: An Example */
-  # ```
+  # @example
+  #   /* title: An Example */
   #
   class BlockCommentYaml < ::Stic::Metadata::Yaml
 

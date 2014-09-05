@@ -1,4 +1,4 @@
-# Stic
+# ![RbNaCl](https://raw.github.com/jgraichen/stic/master/images/stic.png)
 
 Opinionated extensible static site generator.
 

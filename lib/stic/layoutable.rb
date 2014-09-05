@@ -4,7 +4,6 @@ module Stic
   # in a layout.
   #
   module Layoutable
-    extend ::ActiveSupport::Concern
 
     def render(opts = {})
       if layout && (opts[:layout].nil? || opts[:layout])

@@ -1,4 +1,7 @@
-# ![RbNaCl](https://raw.githubusercontent.com/jgraichen/stic/master/stic.png)
+# [![Stic](https://raw.githubusercontent.com/jgraichen/stic/master/stic.png)](https://github.com/jgraichen/stic#readme)
+
+[![Build Status](http://img.shields.io/travis/jgraichen/stic.svg?style=flat)](https://travis-ci.org/jgraichen/stic)
+[![Code Climate](http://img.shields.io/codeclimate/github/jgraichen/stic.svg?style=flat)](https://codeclimate.com/github/jgraichen/stic)
 
 Opinionated extensible static site generator.
 

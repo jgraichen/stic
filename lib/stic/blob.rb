@@ -90,13 +90,8 @@ module Stic
     # method to customize written result.
     #
     def write
-      unless ::File.directory?((dir = ::File.dirname(target_path)))
-        FileUtils.mkdir_p dir
-      end
-
-      ::File.open target_path, 'w' do |file|
-        file.write render
-      end
+      target_path.parent.mkpath
+      target_path.write render
     end
 
     def to_s

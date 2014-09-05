@@ -83,8 +83,9 @@ describe Stic::Blob do
   end
 
   describe '#write' do
-    around { |example| within_temporary_fixture_base(&example) }
-    let(:target_path) { Path.new fixture_path '/path/to/file.html' }
+    before { Path.mock }
+
+    let(:target_path) { Path.new '/path/to/file.html' }
     let(:content) { 'Just some content!' }
 
     before { allow(blob).to receive(:target_path).and_return(target_path) }
@@ -92,13 +93,13 @@ describe Stic::Blob do
 
     it 'should create directories and file' do
       blob.write
-      expect(File.directory?(fixture_path '/path/to')).to be true
-      expect(File.file?(fixture_path '/path/to/file.html')).to be true
+      expect(Path('/path/to')).to be_directory
+      expect(Path('/path/to/file.html')).to be_file
     end
 
     it 'should write content to file' do
       blob.write
-      expect(File.read(fixture_path '/path/to/file.html'))
+      expect(Path('/path/to/file.html').read)
         .to eq 'Just some content!'
     end
   end

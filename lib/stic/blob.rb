@@ -77,11 +77,7 @@ module Stic
     #
     def mime_type
       types = MIME::Types.of relative_target_path.to_s
-      if types.any?
-        types[0]
-      else
-        MIME::Types['application/octet-stream']
-      end
+      types.first
     end
 
     # @!group Actions

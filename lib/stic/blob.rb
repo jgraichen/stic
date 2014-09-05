@@ -66,6 +66,24 @@ module Stic
       site.target.join relative_target_path.as_relative
     end
 
+    # Return the target file MIME type.
+    #
+    # The MIME type is determined using the {#relative_target_path} but can be
+    # overridden by subclasses.
+    #
+    # The MIME type is used for post-processing.
+    #
+    # @return [MIME::Type] MIME type.
+    #
+    def mime_type
+      types = MIME::Types.of relative_target_path.to_s
+      if types.any?
+        types[0]
+      else
+        MIME::Types['application/octet-stream']
+      end
+    end
+
     # @!group Actions
 
     # Write rendered blob to file.

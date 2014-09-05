@@ -3,6 +3,7 @@ require 'active_support/core_ext'
 require 'tilt'
 require 'rubypath'
 require 'yaml'
+require 'mime/types'
 
 require 'stic/version'
 

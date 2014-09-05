@@ -46,6 +46,31 @@ describe Stic::Blob do
     end
   end
 
+  describe '#mime_type' do
+    subject { blob.mime_type }
+    let(:path) { 'file' }
+    let(:url_template) { Path.new path }
+
+    it 'should return MIME::Type' do
+      should be_a MIME::Type
+    end
+
+    context 'with .css file' do
+      let(:path) { 'files/css/style.css' }
+      it { expect(subject.to_s).to eq 'text/css' }
+    end
+
+    context 'with .html file' do
+      let(:path) { 'files/index.html' }
+      it { expect(subject.to_s).to eq 'text/html' }
+    end
+
+    context 'with .js file' do
+      let(:path) { 'files/js/jquery.js' }
+      it { expect(subject.to_s).to eq 'application/javascript' }
+    end
+  end
+
   describe '#target_path' do
     let(:url_template) { Path.new path }
     before { allow(site).to receive(:target).and_return(Path.new('/path/to/stic-site')) }

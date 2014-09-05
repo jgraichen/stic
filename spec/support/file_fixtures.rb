@@ -41,4 +41,5 @@ end
 RSpec.configure do |c|
   c.include FileFixtures
   c.after(:each) { self.fixture_base = nil }
+  c.after(:all) { FileUtils.rm_rf File.expand_path("../../fixtures", __FILE__) }
 end

@@ -1,35 +1,27 @@
 module Stic
-  module Error
-    def self.prepended(base)
-      base.send :attr_reader, :cause
-    end
+  class Error < StandardError
+    attr_reader :cause
 
-    def initialize(*args)
-      @cause = args.pop if args.last.is_a?(Exception)
-      @cause = args.last.fetch(:cause, nil) if args.last.is_a?(Hash)
-      @cause ||= $!
+    def initialize(opts = {})
+      @cause = opts.fetch :cause, $!
 
-      super *args
+      super opts.fetch(:message) { self.message }
     end
   end
 
-  module BlobError
-    def self.prepended(base)
-      base.send :attr_reader, :blob
-    end
+  class BlobError < Error
+    attr_reader :blob
 
-    def initialize(*args)
-      @blob = args.last.is_a?(Hash) ? args.last.fetch(:blob, nil) : nil
-      super *args
+    def initialize(opts = {})
+      @blob = opts.fetch :blob, nil
+
+      super opts
     end
   end
 
-  class InvalidMetadata < StandardError
-    prepend BlobError
-    prepend Error
-
-    def initialize(*args)
-      super "Invalid metadata in #{blob.to_s}: (#{cause.class}) #{cause.message}"
+  class InvalidMetadata < BlobError
+    def message
+      "Invalid metadata in #{blob.to_s}: (#{cause.class}) #{cause.message}"
     end
   end
 end

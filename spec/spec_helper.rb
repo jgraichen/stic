@@ -1,13 +1,18 @@
 require 'rspec'
 
-if ENV['CI'] || ENV['COVERAGE']
+if ENV['CI'] || (defined?(:RUBY_ENGINE) && RUBY_ENGINE != 'rbx')
   require 'coveralls'
+  require 'codeclimate-test-reporter'
+
   Coveralls.wear! do
     add_filter 'spec'
   end
 
-  require "codeclimate-test-reporter"
-  CodeClimate::TestReporter.start
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    Coveralls::SimpleCov::Formatter,
+    SimpleCov::Formatter::HTMLFormatter,
+    CodeClimate::TestReporter::Formatter
+  ]
 end
 
 # Load stic

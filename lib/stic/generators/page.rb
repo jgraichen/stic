@@ -16,7 +16,7 @@ module Stic::Generators
   class Page < ::Stic::Generators::Static
 
     def path_default
-      'content'
+      'pages'
     end
 
     def blob_class

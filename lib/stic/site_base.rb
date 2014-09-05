@@ -32,7 +32,7 @@ module Stic
     #
     def initialize(opts = {})
       @site = opts.delete(:site) { raise ::ArgumentError.new 'Argument `:site` required.' }
-      @data = ::ActiveSupport::HashWithIndifferentAccess.new opts.delete(:data)
+      @data = ::Hashie::Mash.new opts.delete(:data)
     end
   end
 end

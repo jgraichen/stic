@@ -62,6 +62,22 @@ module Stic
       end
     end
 
+    # Return site name from configuration.
+    #
+    # @return [String] Site name.
+    #
+    def name
+      @name ||= config.name
+    end
+
+    # Return site URL from configuration.
+    #
+    # @return [Addressable::URI] Site URL.
+    #
+    def url
+      @url ||= Addressable::URI.parse(config.url)
+    end
+
     # @!group Accessors
 
     # Get layout with given name.
@@ -82,6 +98,10 @@ module Stic
     def blobs(opts = {})
       return @blobs if opts[:type].nil?
       @blobs.select{|blob| blob.class <= opts[:type] }
+    end
+
+    def find(name)
+      @blobs.find{|blob| blob.name == name }
     end
 
     # @!group Actions

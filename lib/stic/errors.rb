@@ -19,6 +19,17 @@ module Stic
     end
   end
 
+  class EmptyURIPlaceholder < BlobError
+    def initialize(opts = {})
+      @name = opts.fetch :name, nil
+      super opts
+    end
+
+    def message
+      "Cannot replace URI placeholder #{@name} with empty string."
+    end
+  end
+
   class InvalidMetadata < BlobError
     def message
       "Invalid metadata in #{blob.to_s}: (#{cause.class}) #{cause.message}"

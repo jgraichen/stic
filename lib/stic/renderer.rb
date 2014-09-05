@@ -26,6 +26,11 @@ module Stic
     #   Stic::Renderer::Environment.extend MyHelpers
     #
     module Environment
+      class << self
+        def uri_escape(str)
+          ::URI.escape str.to_s
+        end
+      end
     end
   end
 end

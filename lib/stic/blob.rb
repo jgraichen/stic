@@ -16,6 +16,8 @@ module Stic
   class Blob
     include SiteBase
 
+    URI_PLACEHOLDER_REGEXP = /^:([A-z0-9_]+)$/
+
     # @!group Accessors
 
     # Return a the relative URL the blob should have in generated site. The URL
@@ -31,9 +33,35 @@ module Stic
     #
     def relative_url
       parts = url_template.each_component(empty: true).map do |fn|
-        fn =~ /^:([A-z0-9_]+)$/ ? data[$1] : fn
+        if (m = URI_PLACEHOLDER_REGEXP.match(fn))
+          result = url_template_replace m[1]
+
+          if result.blank?
+            raise Stic::EmptyURIPlaceholder.new blob: self, name: fn
+          end
+
+          result
+        else
+          fn
+        end
       end
       Path '/', parts
+    end
+
+    # Return sanitized URL component for given placeholder.
+    #
+    # @return [String] URL placeholder value.
+    #
+    def url_template_replace(name)
+      url_template_var(name).to_s.gsub(/[^A-z0-9]+/, '-')
+    end
+
+    # Return URL component for given placeholder.
+    #
+    # @return [String] URL placeholder value.
+    #
+    def url_template_var(name)
+      data[name]
     end
 
     # Return the site relative target path.
@@ -64,6 +92,10 @@ module Stic
     #
     def target_path
       site.target.join relative_target_path.as_relative
+    end
+
+    def url
+      site.url.join relative_url
     end
 
     # Return the target file MIME type.

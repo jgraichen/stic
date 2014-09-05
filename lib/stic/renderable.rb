@@ -34,7 +34,7 @@ module Stic
     # in render context.
     #
     def locals
-      {site: site}
+      {site: site, page: self}
     end
   end
 end

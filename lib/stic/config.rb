@@ -1,19 +1,20 @@
 module Stic
+  #
+  class Config < Hashie::Mash
+    include Hashie::Extensions::DeepMerge
+    include Hashie::Extensions::DeepFetch
 
-  #
-  #
-  class Config
-    attr_reader :options, :files
-    delegate :[], to: :@options
+    attr_reader :files
 
     def initialize(options = {})
-      @options = options
-      @files   = []
+      @files = []
+
+      super options
     end
 
     def load(file)
       data = ::YAML.load(file.read) if file.exist?
-      options.deep_merge(data) if data.is_a?(Hash)
+      deep_merge!(data) if data.is_a?(Hash)
       files << file
     end
 

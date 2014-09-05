@@ -1,9 +1,12 @@
 require 'active_support'
 require 'active_support/core_ext'
+require 'active_support/inflector'
 require 'tilt'
 require 'rubypath'
 require 'yaml'
 require 'mime/types'
+require 'hashie'
+require 'addressable/uri'
 
 require 'stic/version'
 
@@ -26,12 +29,14 @@ module Stic
   require 'stic/generator'
   require 'stic/layout'
   require 'stic/page'
+  require 'stic/post'
   require 'stic/renderer'
   require 'stic/site'
 
   module Generators
     require 'stic/generators/static'
-    require 'stic/generators/page'
+    require 'stic/generators/pages'
+    require 'stic/generators/posts'
   end
 
   module Metadata

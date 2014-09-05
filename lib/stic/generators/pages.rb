@@ -13,7 +13,7 @@ module Stic::Generators
   #       pages:
   #         path: ./custom_pages
   #
-  class Page < ::Stic::Generators::Static
+  class Pages < ::Stic::Generators::Static
 
     def path_default
       'pages'
@@ -24,5 +24,5 @@ module Stic::Generators
     end
   end
 
-  ::Stic::Site.generators << Page
+  ::Stic::Site.generators << Pages
 end

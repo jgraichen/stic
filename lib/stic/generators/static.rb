@@ -36,8 +36,12 @@ module Stic::Generators
 
         path = source.relative_from(full_path)
 
-        site << blob_class.new(site: site, source: source, path: path)
+        site << create(source, path)
       end
+    end
+
+    def create(source, path)
+      blob_class.new(site: site, source: source, path: path)
     end
   end
 

@@ -4,4 +4,12 @@ title: Test
 
 # <%= "Headline 1" %>
 
+```
+#!ruby src:script.rb ln:5
+def method(abc, *args, **opts)
+  # tada
+  Foo::Abc.send :method, abc, *args if opts[:jeehoo] == true
+end
+```
+
 Abc.

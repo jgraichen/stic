@@ -7,14 +7,8 @@ module Stic
     #
     # Return rendered content.
     #
-    def render(opts = {})
-      render_content locals
-    end
-
-    # Render blob content without layout.
-    #
-    def render_content(*args, &block)
-      renderer.render(*args, &block)
+    def render
+      renderer.render(self)
     end
 
     def renderer

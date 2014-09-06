@@ -34,9 +34,9 @@ module Stic
       def url(blob)
         case blob
           when Stic::Blob
-            blob.relative_url.relative_from(self.blob.relative_url.dirname)
+            blob.relative_url.relative_from(Path(self.blob.relative_url.dirname, '/'))
           else
-            Path(blob.to_s).relative_from(self.blob.relative_url.dirname)
+            Path(blob.to_s).relative_from(Path(self.blob.relative_url.dirname, '/'))
         end
       end
 

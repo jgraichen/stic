@@ -14,9 +14,9 @@ module Stic
 
     def render(blob, &block)
       if layout
-        layout.render(blob) { render_content(blob, &block) }
+        layout.render(blob) { renderer.render(blob, &block) }
       else
-        render_content(blob, &block)
+        renderer.render(blob, &block)
       end
     end
 

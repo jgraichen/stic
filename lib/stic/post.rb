@@ -55,5 +55,9 @@ module Stic
     def license
       data.fetch(:license) { site.config.fetch(:license, nil) }
     end
+
+    def default_layout
+      'post'
+    end
   end
 end

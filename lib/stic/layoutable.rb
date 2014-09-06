@@ -5,11 +5,11 @@ module Stic
   #
   module Layoutable
 
-    def render(opts = {})
-      if layout && (opts[:layout].nil? || opts[:layout])
-        layout.render(self) { render(layout: false) }
+    def render
+      if layout
+        layout.render(self) { super }
       else
-        render_content self
+        super
       end
     end
 

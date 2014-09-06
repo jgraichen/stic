@@ -9,7 +9,7 @@ module Stic
       if layout && (opts[:layout].nil? || opts[:layout])
         layout.render(self) { render(layout: false) }
       else
-        super
+        render_content self
       end
     end
 

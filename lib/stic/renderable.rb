@@ -13,8 +13,8 @@ module Stic
 
     # Render blob content without layout.
     #
-    def render_content(locals, &block)
-      renderer.render(locals.merge(data: data), &block)
+    def render_content(*args, &block)
+      renderer.render(*args, &block)
     end
 
     def renderer

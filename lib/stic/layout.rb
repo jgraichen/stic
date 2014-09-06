@@ -13,12 +13,10 @@ module Stic
     include Metadata
 
     def render(blob, &block)
-      locals = blob.locals.merge(data: data)
-
       if layout
-        layout.render(blob) { render_content(locals, &block) }
+        layout.render(blob) { render_content(blob, &block) }
       else
-        render_content locals, &block
+        render_content(blob, &block)
       end
     end
 
